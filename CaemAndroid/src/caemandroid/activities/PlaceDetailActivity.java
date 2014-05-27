@@ -66,6 +66,9 @@ public class PlaceDetailActivity extends Activity {
 				phone.setText(p.getPhone());
 				openHours.setText(p.getOpenHours());
 				
+			}else{
+				HttpUtility.toastMessage(this, "No place retrieved in parsing");
+				finish();
 			}
 
 		}

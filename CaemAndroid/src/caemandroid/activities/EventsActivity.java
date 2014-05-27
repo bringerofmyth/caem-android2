@@ -6,8 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import caemandroid.activities.PlacesActivity.PlaceListAdapter;
 import caemandroid.entity.EventsListObject;
-
 import caemandroid.http.HttpUtility;
 
 import com.example.caemandroid.R;
@@ -37,7 +37,11 @@ public class EventsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events);
+		arrangeEvents();
 		
+		
+		EventListAdapter eventListAdapter = new EventListAdapter();
+	     view1.setAdapter(eventListAdapter);
 	}
 
 	@Override

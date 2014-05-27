@@ -21,11 +21,12 @@ public class Event implements Serializable {
 	private Integer id;
 	private String title;
 
-	private EventType eventType;
-	private Date startTime;
-	private Date finishTime;
+	private Integer eventType;
+	private String startTime;
+	private String finishTime;
+	private String description;
 	private Boolean isRecurrent;
-	private Date recurrentUntil;
+	private String recurrentUntil;
 	private Set<Tag> tags = new HashSet<Tag>(0);
 
 	public Integer getId() {
@@ -44,27 +45,27 @@ public class Event implements Serializable {
 		this.title = title;
 	}
 
-	public EventType getEventType() {
+	public Integer getEventType() {
 		return this.eventType;
 	}
 
-	public void setEventType(EventType eventType) {
+	public void setEventType(Integer eventType) {
 		this.eventType = eventType;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return this.startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getFinishTime() {
+	public String getFinishTime() {
 		return this.finishTime;
 	}
 
-	public void setFinishTime(Date finishTime) {
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
 
@@ -77,11 +78,11 @@ public class Event implements Serializable {
 	}
 
 
-	public Date getRecurrentUntil() {
+	public String getRecurrentUntil() {
 		return this.recurrentUntil;
 	}
 
-	public void setRecurrentUntil(Date recurrentUntil) {
+	public void setRecurrentUntil(String recurrentUntil) {
 		this.recurrentUntil = recurrentUntil;
 	}
 
@@ -121,6 +122,14 @@ public class Event implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

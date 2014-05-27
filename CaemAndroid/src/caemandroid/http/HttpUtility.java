@@ -25,8 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import caemandroid.entity.Event;
 import caemandroid.entity.Place;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -41,10 +41,16 @@ public class HttpUtility {
 
 	public static String POST_USER_URL = "";
 	public static String GET_PLACE_URL = "";
+	public static String GET_EVENT_URL = "";
+	public static String POST_REGISTER_USERTOEVENT_URL = "";
+	public static String GET_USER_EVENTS_URL = "";
 	public static String PostRegisterUser ="";
 	public static String WaitMessage ="Please wait...";
 	public static JSONObject passedJson = null;
-	public static JSONArray passedHotels = null;
+	public static JSONObject passedRegisterInfoJson = null;
+	public static Integer passedUser = null;
+	public static JSONArray passedPlaces = null;
+	public static JSONArray passedUserEvents = null;
 	public static String ReservationUrl = "";
 
 
@@ -155,7 +161,7 @@ public class HttpUtility {
 		HttpResponse response;
 		try {
 			response = httpclient.execute(httpget);
-
+			
 			HttpEntity entity = response.getEntity();
 
 			if (entity != null) {
@@ -177,6 +183,50 @@ public class HttpUtility {
 		return json;
 	}
 	
+	public static JSONArray createGetList(String url,
+			List<NameValuePair> pairs) {
+		// Integer productID = Integer.valueOf(2);
+		JSONArray jarray = null;
+		StringBuilder builder = new StringBuilder();
+		HttpClient httpclient = new DefaultHttpClient();
+		String nUrl = arrangeUrl(url, pairs);
+		HttpGet httpget = new HttpGet(nUrl);
+		HttpResponse response;
+		try {
+			response = httpclient.execute(httpget);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+			HttpEntity entity = response.getEntity();
+			InputStream content = entity.getContent();
+		
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(content));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+		} else {
+			Log.e("==>", "Failed to download file");
+		}
+	} catch (ClientProtocolException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+
+	// Parse String to JSON object
+	try {
+		jarray = new JSONArray(builder.toString());
+		
+	} catch (JSONException e) {
+		Log.e("JSON Parser", "Error parsing data " + e.toString());
+	}
+
+	// return JSON Object
+	return jarray;
+	}
+	
 	public static Place parsePlace (JSONObject jPlace){
 		try {
 			if(jPlace == null || isNullOrEmpty(jPlace.getString("Id"))){
@@ -190,6 +240,31 @@ public class HttpUtility {
 				newPlace.setOpenHours(jPlace.getString("OpenHours"));
 				newPlace.setPhone(jPlace.getString("Phone"));
 				return newPlace;
+
+				
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Event parseEvent (JSONObject jEvent){
+		try {
+			if(jEvent == null || isNullOrEmpty(jEvent.getString("Id"))){
+				return null;
+			}
+			else{
+				Event event = new Event();
+				event.setTitle(jEvent.getString("Title"));
+				event.setStartTime(jEvent.getString("StartTime"));
+				event.setFinishTime(jEvent.getString("FinishTime"));
+				event.setEventType(jEvent.getInt("EventType"));
+				event.setIsRecurrent(jEvent.getBoolean("IsRecurrent"));
+				event.setRecurrentUntil(jEvent.getString("RecurrentUntil"));
+				event.setId(jEvent.getInt("Id"));
+				return event;
 
 				
 			}

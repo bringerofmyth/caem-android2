@@ -21,7 +21,7 @@
             android:src="@drawable/ic_launcher" />
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/edLinearLayout1"
             android:layout_width="151dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -33,13 +33,13 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/edNameLabel"
+                    android:id="@+id/edTitleLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name: " />
+                    android:text="Title: " />
 
                 <TextView
-                    android:id="@+id/edNameText"
+                    android:id="@+id/edTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -49,13 +49,13 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/edOpenHoursLabel"
+                    android:id="@+id/edEventTypeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Open Hours: " />
+                    android:text="Event Type: " />
 
                 <TextView
-                    android:id="@+id/edOpenHoursText"
+                    android:id="@+id/edEventTypeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -65,19 +65,37 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/edPhoneLabel"
+                    android:id="@+id/edStartTimeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phone: " />
+                    android:text="Start Time: " />
 
                 <TextView
-                    android:id="@+id/edPhoneText"
+                    android:id="@+id/edStartTimeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/LinearLayout1"
+                android:id="@+id/edLinearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/edFinishTimeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Finish Time:  " />
+
+                <TextView
+                    android:id="@+id/edFinishTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edLinearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
@@ -86,28 +104,10 @@
                     android:id="@+id/edDescriptionLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description: " />
+                    android:text="Description:  " />
 
                 <TextView
                     android:id="@+id/edDescriptionText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LinearLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/edAddressLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address: " />
-
-                <TextView
-                    android:id="@+id/edAddressText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -117,37 +117,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <ImageView
-                android:id="@+id/edImageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
-
-            <ImageView
-                android:id="@+id/edImageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
-
-            <ImageView
-                android:id="@+id/edImageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
-
-            <ImageView
-                android:id="@+id/edImageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
-
         </LinearLayout>
 
-        <Button
-            android:id="@+id/edBackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/edBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/edRegisterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 	private Button login, register;
 	private EditText userName , pass;
 	private String userNameStr="", passStr ="" ;
-	private JSONObject jsonObject = null;
+	private JSONObject jsonObjectU = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +131,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_USER_URL, pairs);
+			jsonObjectU = HttpUtility.createPostRequest(HttpUtility.POST_USER_URL, pairs);
 			return null;
 		}
 		 @Override
@@ -141,8 +141,8 @@ public class MainActivity extends Activity {
 	                dialog.dismiss();
 	            try {
 		           	 
-	            	if(jsonObject !=null && jsonObject.getString("Username")!=null && !jsonObject.getString("Username").isEmpty() ){
-	            		HttpUtility.passedJson = jsonObject;
+	            	if(jsonObjectU !=null && jsonObjectU.getString("Id")!=null && !jsonObjectU.getString("Id").isEmpty() ){
+	            		HttpUtility.passedUser = jsonObjectU.getInt("Id");
 	            		HttpUtility.createIntent(MainActivity.this, WelcomeScreenActivity.class );
 
 		            	return;
