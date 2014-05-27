@@ -43,6 +43,8 @@ public class MainActivity extends Activity {
 	private EditText userName , pass;
 	private String userNameStr="", passStr ="" ;
 	private JSONObject jsonObjectU = null;
+	private Spinner s;
+	int posit = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class MainActivity extends Activity {
         array_spinner[0]="Standard User";
         array_spinner[1]="Place/Event Owner";
 
-        Spinner s = (Spinner) findViewById(R.id.mUsertypeSpinner);
+         s = (Spinner) findViewById(R.id.mUsertypeSpinner);
         ArrayAdapter adapter = new ArrayAdapter(this,
         android.R.layout.simple_spinner_item, array_spinner);
         s.setAdapter(adapter);
@@ -121,6 +123,13 @@ public class MainActivity extends Activity {
             
         	pairs.add(new BasicNameValuePair("Username", userNameStr));
         	pairs.add(new BasicNameValuePair("Password", passStr));
+        	posit = s.getSelectedItemPosition();
+        	
+        	pairs.add(new BasicNameValuePair("UserType", String.valueOf(posit)));
+        	if(posit == -1){
+        		HttpUtility.toastMessage(MainActivity.this, "User Type not applicable");
+        		this.cancel(true);
+        	}
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
@@ -143,7 +152,16 @@ public class MainActivity extends Activity {
 		           	 
 	            	if(jsonObjectU !=null && jsonObjectU.getString("Id")!=null && !jsonObjectU.getString("Id").isEmpty() ){
 	            		HttpUtility.passedUser = jsonObjectU.getInt("Id");
-	            		HttpUtility.createIntent(MainActivity.this, WelcomeScreenActivity.class );
+	            		if(posit==0){
+	            			HttpUtility.createIntent(MainActivity.this, WelcomeScreenActivity.class );
+	            		}
+	            		else if(posit == 1){
+	            			HttpUtility.createIntent(MainActivity.this, OwnerActivity.class );
+	            		}
+	            		else{
+	            			HttpUtility.toastMessage(MainActivity.this, "Response: User Type not applicable");
+	            		}
+	            		
 
 		            	return;
 	            	}

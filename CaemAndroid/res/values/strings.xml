@@ -14,5 +14,7 @@
     <string name="title_activity_user_locations">UserLocationsActivity</string>
     <string name="title_activity_place_detail">PlaceDetailActivity</string>
     <string name="title_activity_event_detail">EventDetailActivity</string>
+    <string name="title_activity_owner">OwnerActivity</string>
+    <string name="title_activity_create_event">CreateEventActivity</string>
 
 </resources>

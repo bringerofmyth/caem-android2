@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="79dp"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/oCreatePlaceButton"
+            android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:text="Create Place" />
+
+        <Button
+            android:id="@+id/oCreateEventButton"
+           android:layout_width="168dp"
+            android:layout_height="wrap_content"
+            android:text="Create Event" />
+
+            <Button
+                android:id="@+id/oCreateCategoryButton"
+                android:layout_width="168dp"
+                android:layout_height="wrap_content"
+                android:text="Create Category" />
+
+    </LinearLayout>
+
+</RelativeLayout>

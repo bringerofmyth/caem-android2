@@ -54,6 +54,14 @@
             android:name="caemandroid.activities.EventDetailActivity"
             android:label="@string/title_activity_event_detail" >
         </activity>
+        <activity
+            android:name="caemandroid.activities.OwnerActivity"
+            android:label="@string/title_activity_owner" >
+        </activity>
+        <activity
+            android:name="caemandroid.activities.CreateEventActivity"
+            android:label="@string/title_activity_create_event" >
+        </activity>
     </application>
 
 </manifest>
