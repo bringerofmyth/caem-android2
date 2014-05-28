@@ -34,7 +34,26 @@
                 <requestFocus />
             </EditText>
         </LinearLayout>
+  <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
+            <TextView
+                android:id="@+id/ceStartDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date: " />
+
+            <EditText
+                android:id="@+id/ceStartDateEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="date" />
+
+        </LinearLayout>
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -46,12 +65,30 @@
                 android:text="Start Time: " />
 
             <EditText
-                android:id="@+id/ceStartTimeDate"
+                android:id="@+id/ceStartTimeDateEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPassword" />
+                android:inputType="time" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/ceFinishDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                
+                android:text="Finish Date: " />
+
+            <EditText
+                android:id="@+id/ceFinishDateEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -66,13 +103,12 @@
                 
                 android:text="Finish Time: " />
 
-            <Spinner
-                android:id="@+id/ceFinishTimeDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@string/eventownerText" />
-        </LinearLayout>
+            <EditText
+                android:id="@+id/ceFinishTimeEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+        </LinearLayout>
      
 
         <LinearLayout
@@ -81,17 +117,42 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/rPhoneText"
+                android:id="@+id/ceDescriptionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone" />
+                android:text="Description: " />
 
             <EditText
-                android:id="@+id/rPhoneEdit"
+                android:id="@+id/ceDescriptionEdit"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="phone" />
+                android:inputType="textMultiLine" />
+        </LinearLayout>
+             <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/ceUploadImageLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image:  " />
+
+            <TextView
+                android:id="@+id/ceUploadImageText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                 android:text="none " />
+
+            <Button
+                android:id="@+id/button1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="..." />
+
         </LinearLayout>
 
         <LinearLayout
@@ -99,18 +160,18 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/rCancelButton"
+                android:id="@+id/ceClearButton"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Cancel" />
+                android:text="Clear" />
 
             <Button
-                android:id="@+id/rRegisterButton"
+                android:id="@+id/ceCreateButton"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Register" />
+                android:text="Create" />
         </LinearLayout>
 
     </LinearLayout>
