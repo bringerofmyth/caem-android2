@@ -40,6 +40,7 @@ import android.widget.Toast;
 public class HttpUtility {
 
 	public static String POST_USER_URL = "";
+	public static String POST_CREATE_EVENT_URL = "";
 	public static String GET_PLACE_URL = "";
 	public static String GET_EVENT_URL = "";
 	public static String POST_REGISTER_USERTOEVENT_URL = "";
