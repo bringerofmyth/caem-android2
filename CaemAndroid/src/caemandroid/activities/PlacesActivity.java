@@ -12,8 +12,10 @@ import caemandroid.http.HttpUtility;
 import com.example.caemandroid.R;
 
 
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,7 @@ public class PlacesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_places);
 		//final ListView listView1 = (ListView) findViewById(R.id.listView1);
-		
+		view1 =  (ListView) findViewById(R.id.pListView1);
 		arrangePlaces();
 		
 		
@@ -111,11 +113,11 @@ public class PlacesActivity extends Activity {
 	            // view holderý sýfýrdan oluþturma
 	            placeViewHolder = new PlaceViewHolder();
 	            placeViewHolder.name = (TextView) convertView
-	                    .findViewById(R.id.place_name);
+	                    .findViewById(R.id.lyPlace_name);
 	            placeViewHolder.category = (TextView) convertView
-	                    .findViewById(R.id.place_category);
+	                    .findViewById(R.id.lyPlace_category);
 	            placeViewHolder.img = (ImageView) convertView
-	                    .findViewById(R.id.place_image);
+	                    .findViewById(R.id.lyPlace_image);
 	 
 	            convertView.setTag(placeViewHolder);
 	        } else {

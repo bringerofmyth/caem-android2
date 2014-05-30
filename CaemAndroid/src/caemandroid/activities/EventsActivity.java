@@ -37,6 +37,7 @@ public class EventsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events);
+		view1 = (ListView) findViewById(R.id.eListView1);
 		arrangeEvents();
 		
 		

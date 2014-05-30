@@ -45,6 +45,7 @@ public class HttpUtility {
 	public static String GET_EVENT_URL = "";
 	public static String POST_REGISTER_USERTOEVENT_URL = "";
 	public static String GET_USER_EVENTS_URL = "";
+	public static String GET_USER_REGISTRATIONS_URL = "";
 	public static String PostRegisterUser ="";
 	public static String WaitMessage ="Please wait...";
 	public static JSONObject passedJson = null;
@@ -52,6 +53,7 @@ public class HttpUtility {
 	public static Integer passedUser = null;
 	public static JSONArray passedPlaces = null;
 	public static JSONArray passedUserEvents = null;
+	public static JSONArray passedUserRegistrations = null;
 	public static String ReservationUrl = "";
 
 

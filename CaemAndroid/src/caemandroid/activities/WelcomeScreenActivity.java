@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import caemandroid.http.HttpUtility;
 import com.example.caemandroid.R;
 import com.example.caemandroid.R.layout;
 import com.example.caemandroid.R.menu;
+import com.example.caemandroid.RegistrationsListActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,8 +29,8 @@ import android.widget.Spinner;
 
 public class WelcomeScreenActivity extends Activity {
 
-	private Button bPlaces, bInterests, bEvents, bLocations, bMessages;
-	private JSONArray jsonArray;
+	private Button bPlaces, bInterests, bEvents, bLocations, bMessages, bRegistrations;
+	private JSONArray jsonArray, jsonArrayRegs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,16 @@ public class WelcomeScreenActivity extends Activity {
 		return true;
 	}
 
+	private void bringRegistrations(){
+		new bringRegistrationsAsyncTask(HttpUtility.WaitMessage);
+	}
 	private void findComponents(){
+		bRegistrations = (Button) findViewById(R.id.wRegistrationsButton);
+		bRegistrations.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	bringRegistrations();
+            }
+        });
 		bPlaces = (Button) findViewById(R.id.wPlacesButton);
 		bPlaces.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
@@ -138,5 +149,65 @@ public class WelcomeScreenActivity extends Activity {
 	 
 	        }
 	    }
+	private class bringRegistrationsAsyncTask extends AsyncTask<Void, Void, Void> {
+		String modalMesaj;
+		ProgressDialog dialog;
+		List<NameValuePair> pairs = new ArrayList <NameValuePair>(1);
+
+        public bringRegistrationsAsyncTask(String mMesaj) {
+            this.modalMesaj = mMesaj;
+            this.dialog = new ProgressDialog(WelcomeScreenActivity.this);
+        }
+
+        
+        @Override
+        protected void onPreExecute() {
+        	
+        	pairs.add(new BasicNameValuePair("Id", String.valueOf(HttpUtility.passedUser)));
+        	dialog.setMessage(modalMesaj);
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+            
+        }
+        
+		@Override
+		protected Void doInBackground(Void... params) {
+			
+			jsonArrayRegs = HttpUtility.createGetList(HttpUtility.GET_USER_REGISTRATIONS_URL, pairs);
+			return null;
+		}
+		 @Override
+	        protected void onPostExecute(Void str) {
+	 
+	            if (dialog.isShowing())
+	                dialog.dismiss();
+	            try {
+		           	 
+	            	if(jsonArrayRegs !=null && jsonArrayRegs.length()>0){
+	            		HttpUtility.passedUserRegistrations = jsonArrayRegs;
+	            		HttpUtility.createIntent(WelcomeScreenActivity.this, RegistrationsListActivity.class);
+	            	
+	            	}
+	            	else{
+		            	HttpUtility.toastMessage(WelcomeScreenActivity.this, "No user registrations found.");
+		            	//finish();
+	            	}
+
+	            	
+	               // String id = jsonObject.getString("Telefon").toString();
+	              
+	                	                
+	 
+	            } catch (Exception e) {
+	            	HttpUtility.toastMessage(WelcomeScreenActivity.this, "Exception: No registration found");
+	                e.printStackTrace();
+	            }
+	 
+	           // text.setText(responseBody);
+	 
+	        }
+	    }
+
 
 }
