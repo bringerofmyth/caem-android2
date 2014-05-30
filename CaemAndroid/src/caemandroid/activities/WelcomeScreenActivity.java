@@ -15,7 +15,6 @@ import caemandroid.http.HttpUtility;
 import com.example.caemandroid.R;
 import com.example.caemandroid.R.layout;
 import com.example.caemandroid.R.menu;
-import com.example.caemandroid.RegistrationsListActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

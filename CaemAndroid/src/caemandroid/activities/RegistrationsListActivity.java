@@ -1,4 +1,4 @@
-package com.example.caemandroid;
+package caemandroid.activities;
 
 import java.util.ArrayList;
 
@@ -6,8 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import caemandroid.activities.PlaceDetailActivity;
-import caemandroid.activities.PlacesActivity;
+import com.example.caemandroid.R;
+import com.example.caemandroid.R.drawable;
+import com.example.caemandroid.R.id;
+import com.example.caemandroid.R.layout;
+
 import caemandroid.entity.PlacesListObject;
 import caemandroid.entity.RegistrationsListObject;
 import caemandroid.http.HttpUtility;

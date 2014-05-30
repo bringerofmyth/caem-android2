@@ -17,5 +17,6 @@
     <string name="title_activity_owner">OwnerActivity</string>
     <string name="title_activity_create_event">CreateEventActivity</string>
     <string name="title_activity_registrations_list">RegistrationsListActivity</string>
+    <string name="title_activity_create_interest">CreateInterestActivity</string>
 
 </resources>
