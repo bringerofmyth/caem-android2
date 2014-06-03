@@ -62,6 +62,14 @@
             android:name="caemandroid.activities.CreateEventActivity"
             android:label="@string/title_activity_create_event" >
         </activity>
+        <activity
+            android:name="caemandroid.activities.RegistrationsListActivity"
+            android:label="@string/title_activity_registrations_list" >
+        </activity>
+        <activity
+            android:name="caemandroid.activities.CreateInterestActivity"
+            android:label="@string/title_activity_create_interest" >
+        </activity>
     </application>
 
 </manifest>
