@@ -12,6 +12,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +44,8 @@ public class MainActivity extends Activity {
 	private EditText userName , pass;
 	private String userNameStr="", passStr ="" ;
 	private JSONObject jsonObjectU = null;
+	private String jsonObjectUstr ="";
+	private JSONArray arr = null;
 	private Spinner s;
 	int posit = -1;
     @Override
@@ -111,6 +114,8 @@ public class MainActivity extends Activity {
 		String modalMesaj;
 		ProgressDialog dialog;
 		String productName = "";
+		JSONObject jsonObject = new JSONObject();
+		
 		List<NameValuePair> pairs = new ArrayList <NameValuePair>(2);
 
         public loginAsyncTask(String mMesaj) {
@@ -120,12 +125,21 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            
-        	pairs.add(new BasicNameValuePair("Username", userNameStr));
-        	pairs.add(new BasicNameValuePair("Password", passStr));
+        	try {
+				jsonObject.put("Username", userNameStr);
+				jsonObject.put("Password", passStr);
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+        
         	posit = s.getSelectedItemPosition();
         	
-        	pairs.add(new BasicNameValuePair("UserType", String.valueOf(posit)));
+        	
+        	//pairs.add(new BasicNameValuePair("Id", String.valueOf(2)));
+        	//pairs.add(new BasicNameValuePair("UserType", String.valueOf(posit)));
         	if(posit == -1){
         		HttpUtility.toastMessage(MainActivity.this, "User Type not applicable");
         		this.cancel(true);
@@ -139,8 +153,8 @@ public class MainActivity extends Activity {
         
 		@Override
 		protected Void doInBackground(Void... params) {
-			
-			jsonObjectU = HttpUtility.createPostRequest(HttpUtility.POST_USER_URL, pairs);
+			//arr = HttpUtility.createGetList(HttpUtility.POST_USER_URL, pairs);
+			jsonObjectU = HttpUtility.createPostRequest(HttpUtility.POST_LOGIN_USER_URL, jsonObject);
 			return null;
 		}
 		 @Override
@@ -161,18 +175,23 @@ public class MainActivity extends Activity {
 	            		else{
 	            			HttpUtility.toastMessage(MainActivity.this, "Response: User Type not applicable");
 	            		}
-	            		
+	            		}
+	            		/*JSONObject js = new JSONObject(jsonObjectUstr);
+	            		String gett = js.getString("Password");
+	            	*/
+	            	//	HttpUtility.toastMessage(MainActivity.this, arr.toString());
 
-		            	return;
-	            	}
-	            	HttpUtility.toastMessage(MainActivity.this, "Username/password combination is not matched.");
+
+	            	
+	            	//HttpUtility.toastMessage(MainActivity.this, "Username/password combination is not matched.");
 	            	
 	               // String id = jsonObject.getString("Telefon").toString();
 	              
 	                	                
 	 
-	            } catch (JSONException e) {
-	            	HttpUtility.toastMessage(MainActivity.this, "Exception:Username/password combination is not matched.");
+	            } catch (Exception e) {
+	            	HttpUtility.toastMessage(MainActivity.this, e.toString());
+	            	//HttpUtility.toastMessage(MainActivity.this, "Exception:Username/password combination is not matched.");
 	                e.printStackTrace();
 	            }
 	 

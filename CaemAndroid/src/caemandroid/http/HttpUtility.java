@@ -19,8 +19,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +43,8 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class HttpUtility {
 
-	public static String POST_USER_URL = "";
+	public static String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users";
+	public static String POST_USER_URL = "http://caemwepapi.azurewebsites.net/api/users";
 	public static String POST_CREATE_EVENT_URL = "";
 	public static String GET_PLACE_URL = "";
 	public static String GET_EVENT_URL = "";
@@ -65,7 +70,6 @@ public class HttpUtility {
 		try {
 
 			post.setEntity(new UrlEncodedFormEntity(pairs));
-
 			HttpResponse response = client.execute(post);
 			HttpEntity entity = response.getEntity();
 			// responseBody = EntityUtils.toString(response.getEntity());
@@ -302,6 +306,10 @@ public class HttpUtility {
 	public static void toastMessage(Context ctx, String msg) {
 		Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
 	}
+	public static void toastMessageShort(Context ctx, String msg) {
+		Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
+	}
+
 
 	public static boolean isNullOrEmpty(String s) {
 		if (s == null || s.isEmpty()) {
@@ -356,5 +364,56 @@ public class HttpUtility {
 		intent.putExtra(putName, putValue);
 		ctx.startActivity(intent);
 	}
+	public static JSONObject createPostRequest(String url, JSONObject entity) {
+		JSONObject jsonObject = null;
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
+		String result = "";
+		JSONObject js = null;
+		try {
+			//HttpClient httpclient = new DefaultHttpClient();
+			//HttpPost httppost = new HttpPost(urls[0]);
+			StringEntity params = new StringEntity(entity.toString());
+
+			params.setContentType("application/json;charset=UTF-8");
+			params.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+					"application/json;charset=UTF-8"));
+			post.setHeader("Accept", "application/json");
+
+			post.setEntity(params);
+			HttpResponse response = client.execute(post);
+			result = EntityUtils.toString(response.getEntity());
+				js = new JSONObject(result);
+			//Sonuc = EntityUtils.toString(response.getEntity());
+			
+
+			// responseBody = EntityUtils.toString(response.getEntity());
+
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return js;
+	}
+	
 
 }
+/*HttpClient httpclient = new DefaultHttpClient();
+				HttpPost httppost = new HttpPost(urls[0]);
+				StringEntity params = new StringEntity(urls[1].toString());
+
+				params.setContentType("application/json;charset=UTF-8");
+				params.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+						"application/json;charset=UTF-8"));
+				httppost.setHeader("Accept", "application/json");
+
+				httppost.setEntity(params);
+				HttpResponse response = httpclient.execute(httppost);
+
+				Sonuc = EntityUtils.toString(response.getEntity());*/
