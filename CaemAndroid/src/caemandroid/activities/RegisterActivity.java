@@ -125,7 +125,7 @@ public class RegisterActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_USER_URL, pairs);
+			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_REGISTER_USER_URL, pairs);
 			return null;
 		}
 		 @SuppressLint("NewApi")

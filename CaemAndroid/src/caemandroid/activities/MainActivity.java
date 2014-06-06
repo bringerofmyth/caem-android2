@@ -165,7 +165,7 @@ public class MainActivity extends Activity {
 	            try {
 		           	 
 	            	if(jsonObjectU !=null && jsonObjectU.getString("Id")!=null && !jsonObjectU.getString("Id").isEmpty() ){
-	            		HttpUtility.passedUser = jsonObjectU.getInt("Id");
+	            		HttpUtility.passedUser = jsonObjectU.getInt("Id");/*
 	            		if(posit==0){
 	            			HttpUtility.createIntent(MainActivity.this, WelcomeScreenActivity.class );
 	            		}
@@ -174,13 +174,17 @@ public class MainActivity extends Activity {
 	            		}
 	            		else{
 	            			HttpUtility.toastMessage(MainActivity.this, "Response: User Type not applicable");
-	            		}
-	            		}
+	            		}*/
+	            		HttpUtility.toastMessage(MainActivity.this, "Found with id: "+jsonObjectU.getString("Id")+" and name: "+ jsonObjectU.getString("Name") );
+	            		HttpUtility.createIntent(MainActivity.this, WelcomeScreenActivity.class );
+	            	}
 	            		/*JSONObject js = new JSONObject(jsonObjectUstr);
 	            		String gett = js.getString("Password");
 	            	*/
 	            	//	HttpUtility.toastMessage(MainActivity.this, arr.toString());
-
+	            	else{
+	            		HttpUtility.toastMessage(MainActivity.this, "not found: "+ jsonObjectU.toString() );
+	            	}
 
 	            	
 	            	//HttpUtility.toastMessage(MainActivity.this, "Username/password combination is not matched.");

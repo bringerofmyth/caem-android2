@@ -43,8 +43,8 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class HttpUtility {
 
-	public static String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users";
-	public static String POST_USER_URL = "http://caemwepapi.azurewebsites.net/api/users";
+	public static String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/login";
+	public static String POST_REGISTER_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/register";
 	public static String POST_CREATE_EVENT_URL = "";
 	public static String GET_PLACE_URL = "";
 	public static String GET_EVENT_URL = "";
