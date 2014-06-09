@@ -51,6 +51,7 @@ public class HttpUtility {
 	public static final String GET_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events";
 	public static final String GET_RECOMM_PLACES_URL = "http://caemwepapi.azurewebsites.net/api/places/recommend";
 	public static final String POST_UPDATE_USER_TAGS_URL = "http://caemwepapi.azurewebsites.net/api/tags/updateuser";
+	public static final String POST_CREATE_USER_TAG_URL = "http://caemwepapi.azurewebsites.net/api/tags/create";
 	
 	public static final String GET_TAGS_URL = "http://caemwepapi.azurewebsites.net/api/tags/list";
 	public static final String GET_USER_TAGS_URL = "http://caemwepapi.azurewebsites.net/api/tags/getuserlist";

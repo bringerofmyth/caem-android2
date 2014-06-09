@@ -187,6 +187,7 @@ public class UserInterestsActivity extends Activity {
 
 		}
 	}
+	
 	class InterestListAdapter extends BaseAdapter {
 		 
 	    @Override
