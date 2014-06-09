@@ -55,7 +55,6 @@ public class CreateInterestActivity extends Activity {
 	private class createInterestsAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
 		JSONObject jo = new JSONObject();
 		public createInterestsAsyncTask(String mMesaj) {
 			this.modalMesaj = mMesaj;
