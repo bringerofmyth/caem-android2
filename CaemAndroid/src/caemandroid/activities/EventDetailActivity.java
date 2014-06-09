@@ -197,7 +197,7 @@ public class EventDetailActivity extends Activity {
 	private class registerUserAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList <NameValuePair>(2);
+		JSONObject jO = new JSONObject();
 
         public registerUserAsyncTask(String mMesaj) {
             this.modalMesaj = mMesaj;
@@ -207,9 +207,16 @@ public class EventDetailActivity extends Activity {
         
         @Override
         protected void onPreExecute() {
+        	try {
+				jO.put("UserId", String.valueOf(HttpUtility.passedUser) );
+				jO.put("EventId", eventId);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	
-        	pairs.add(new BasicNameValuePair("UserId",String.valueOf(HttpUtility.passedUser )));
-        	pairs.add(new BasicNameValuePair("EventId",eventId ));
+        	//pairs.add(new BasicNameValuePair("UserId",String.valueOf(HttpUtility.passedUser )));
+        	//pairs.add(new BasicNameValuePair("EventId",eventId ));
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
@@ -221,7 +228,7 @@ public class EventDetailActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_REGISTER_USERTOEVENT_URL, pairs);
+			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_REGISTER_USERTOEVENT_URL, jO);
 			return null;
 		}
 		 @Override

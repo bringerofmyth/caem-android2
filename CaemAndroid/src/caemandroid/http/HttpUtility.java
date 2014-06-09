@@ -43,23 +43,31 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class HttpUtility {
 
-	public static String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/login";
-	public static String POST_REGISTER_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/register";
-	public static String POST_CREATE_EVENT_URL = "";
-	public static String GET_PLACE_URL = "";
-	public static String GET_EVENT_URL = "";
-	public static String POST_REGISTER_USERTOEVENT_URL = "";
-	public static String GET_USER_EVENTS_URL = "";
-	public static String GET_USER_REGISTRATIONS_URL = "";
-	public static String PostRegisterUser ="";
-	public static String WaitMessage ="Please wait...";
+	public static final String GET_RECOMM_EVENTS_URL = "http://caemwepapi.azurewebsites.net/api/events/recommend";
+	public static final String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/login";
+	public static final String POST_REGISTER_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/register";
+	public static final String POST_CREATE_EVENT_URL = "";
+	public static final String GET_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places";
+	public static final String GET_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events";
+	public static final String GET_RECOMM_PLACES_URL = "http://caemwepapi.azurewebsites.net/api/places/recommend";
+	public static final String POST_UPDATE_USER_TAGS_URL = "http://caemwepapi.azurewebsites.net/api/tags/updateuser";
+	
+	public static final String GET_TAGS_URL = "http://caemwepapi.azurewebsites.net/api/tags/list";
+	public static final String GET_USER_TAGS_URL = "http://caemwepapi.azurewebsites.net/api/tags/getuserlist";
+	public static final String POST_REGISTER_USERTOEVENT_URL = "http://caemwepapi.azurewebsites.net/api/registrations/register";
+	public static final String GET_USER_REGISTERED_EVENTS_URL = "http://caemwepapi.azurewebsites.net/api/events/userregistrations";
+	public static final String GET_USER_REGISTRATIONS_URL = "";
+	public static final String PostRegisterUser ="";
+	public static final String WaitMessage ="Please wait...";
 	public static JSONObject passedJson = null;
 	public static JSONObject passedRegisterInfoJson = null;
 	public static Integer passedUser = null;
 	public static JSONArray passedPlaces = null;
 	public static JSONArray passedUserEvents = null;
+	public static JSONArray passedUserTags = null;
 	public static JSONArray passedUserRegistrations = null;
 	public static String ReservationUrl = "";
+	public static JSONArray passedTags  = null;
 
 
 	public static JSONObject createPostRequest(String url,
@@ -93,46 +101,7 @@ public class HttpUtility {
 		return jsonObject;
 	}
 
-	public static JSONArray createPostList(String url, List<NameValuePair> pairs) {
-		JSONArray jarray = null;
-		StringBuilder builder = new StringBuilder();
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(url);
-		try {
-			post.setEntity(new UrlEncodedFormEntity(pairs));
-			HttpResponse response = client.execute(post);
-			StatusLine statusLine = response.getStatusLine();
-			int statusCode = statusLine.getStatusCode();
-			if (statusCode == 200) {
-				HttpEntity entity = response.getEntity();
-				InputStream content = entity.getContent();
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(content));
-				String line;
-				while ((line = reader.readLine()) != null) {
-					builder.append(line);
-				}
-			} else {
-				Log.e("==>", "Failed to download file");
-			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		// Parse String to JSON object
-		try {
-			jarray = new JSONArray(builder.toString());
-			
-		} catch (JSONException e) {
-			Log.e("JSON Parser", "Error parsing data " + e.toString());
-		}
-
-		// return JSON Object
-		return jarray;
-
-	}
 
 	private static String arrangeUrl(String url, List<NameValuePair> pairs) {
 
@@ -365,7 +334,7 @@ public class HttpUtility {
 		ctx.startActivity(intent);
 	}
 	public static JSONObject createPostRequest(String url, JSONObject entity) {
-		JSONObject jsonObject = null;
+		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(url);
 		String result = "";
@@ -384,6 +353,83 @@ public class HttpUtility {
 			HttpResponse response = client.execute(post);
 			result = EntityUtils.toString(response.getEntity());
 				js = new JSONObject(result);
+			//Sonuc = EntityUtils.toString(response.getEntity());
+			
+
+			// responseBody = EntityUtils.toString(response.getEntity());
+
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return js;
+	}
+	public static JSONArray createPostList(String url, List<NameValuePair> pairs) {
+		JSONArray jarray = null;
+		StringBuilder builder = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
+		try {
+			post.setEntity(new UrlEncodedFormEntity(pairs));
+			HttpResponse response = client.execute(post);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+				Log.e("==>", "Failed to download file");
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Parse String to JSON object
+		try {
+			jarray = new JSONArray(builder.toString());
+			
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		}
+
+		// return JSON Object
+		return jarray;
+
+	}
+public static JSONArray createPostList(String url, JSONObject entity) {
+		
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
+		String result = "";
+		JSONArray js = null;
+		try {
+			//HttpClient httpclient = new DefaultHttpClient();
+			//HttpPost httppost = new HttpPost(urls[0]);
+			StringEntity params = new StringEntity(entity.toString());
+
+			params.setContentType("application/json;charset=UTF-8");
+			params.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+					"application/json;charset=UTF-8"));
+			post.setHeader("Accept", "application/json");
+
+			post.setEntity(params);
+			HttpResponse response = client.execute(post);
+			result = EntityUtils.toString(response.getEntity());
+				js = new JSONArray(result);
 			//Sonuc = EntityUtils.toString(response.getEntity());
 			
 

@@ -56,21 +56,28 @@ public class PlacesActivity extends Activity {
 		return true;
 	}
 	private void arrangePlaces(){
-		placesList = new ArrayList<PlacesListObject>();
+		JSONArray cast = HttpUtility.passedPlaces;
+		if(cast == null || cast.length()<1){
+			HttpUtility.toastMessage(PlacesActivity.this, "No places.");
+		}
+		else{
+			placesList = new ArrayList<PlacesListObject>();
 
-		JSONArray cast = places;
-		try {
 			
-			for (int i=0; i<cast.length(); i++) {
-			    JSONObject pla = cast.getJSONObject(i);
-			    PlacesListObject h = new PlacesListObject(pla.getString("Id"), pla.getString("Name"), pla.getString("Category"), R.drawable.ic_launcher);
-			    placesList.add(h);
-			    //hotelArray[i] =h;
-			    
+			try {
+				
+				for (int i=0; i<cast.length(); i++) {
+				    JSONObject pla = cast.getJSONObject(i);
+				    PlacesListObject h = new PlacesListObject(pla.getString("Id"), pla.getString("Name"), pla.getString("Category"), R.drawable.ic_launcher);
+				    placesList.add(h);
+				    //hotelArray[i] =h;
+				    
+				}
+			}catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		
 		

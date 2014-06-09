@@ -52,9 +52,13 @@ public class EventsActivity extends Activity {
 		return true;
 	}
 	private void arrangeEvents(){
+		JSONArray cast = HttpUtility.passedUserEvents;
+		if(cast ==null || cast.length()<1 ){
+			HttpUtility.toastMessage(EventsActivity.this, "No event found.");
+		}
 		eventsList = new ArrayList<EventsListObject>();
 
-		JSONArray cast = events;
+		
 		try {
 			
 			for (int i=0; i<cast.length(); i++) {

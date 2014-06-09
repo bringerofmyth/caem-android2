@@ -124,7 +124,7 @@ public class PlaceDetailActivity extends Activity {
 	                	                
 	 
 	            } catch (JSONException e) {
-	            	HttpUtility.toastMessage(PlaceDetailActivity.this, "Exception:Username/password combination is not matched.");
+	            	HttpUtility.toastMessage(PlaceDetailActivity.this, "Exception: No place found.");
 	                e.printStackTrace();
 	            }
 	 

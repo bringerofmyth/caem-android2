@@ -7,8 +7,10 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -70,6 +72,10 @@
         <activity
             android:name="caemandroid.activities.CreateInterestActivity"
             android:label="@string/title_activity_create_interest" >
+        </activity>
+        <activity
+            android:name="caemandroid.activities.UserInterestsActivity"
+            android:label="@string/title_activity_user_interests" >
         </activity>
     </application>
 
