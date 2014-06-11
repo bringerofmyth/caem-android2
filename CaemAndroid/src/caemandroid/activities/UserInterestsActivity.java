@@ -62,7 +62,7 @@ public class UserInterestsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				new saveInterestsAsyncTask(HttpUtility.WaitMessage);
+				new saveInterestsAsyncTask(HttpUtility.WaitMessage).execute();
 				
 			}
 		});

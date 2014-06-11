@@ -63,7 +63,7 @@ public class CreateEventActivity extends Activity {
 			HttpUtility.toastMessage(CreateEventActivity.this, "Please fill required fields");
 		}
 		else{
-			new createEventAsyncTask(HttpUtility.WaitMessage);
+			new createEventAsyncTask(HttpUtility.WaitMessage).execute();
 		}
 	
 	}

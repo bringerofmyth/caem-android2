@@ -144,7 +144,7 @@ public class EventsActivity extends Activity {
 	            @Override
 	            public void onClick(View v) {
 	            	String id = eventsList.get(position).getId();
-	            	HttpUtility.createIntent(EventsActivity.this, EventDetailActivity.class, "Id",id);
+	            	HttpUtility.startIntent(EventsActivity.this, EventDetailActivity.class, "Id",id);
 	            	/*placesList.get(position).setSelected(!placesList
 	                        .get(position).isSelected());
 	                if (placesList.get(position).isSelected())

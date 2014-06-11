@@ -28,7 +28,7 @@
                 android:id="@+id/oCreateCategoryButton"
                 android:layout_width="168dp"
                 android:layout_height="wrap_content"
-                android:text="Create Category" />
+                android:text="Create Interest" />
 
     </LinearLayout>
 

@@ -151,7 +151,7 @@ public class PlacesActivity extends Activity {
 	            @Override
 	            public void onClick(View v) {
 	            	String id = placesList.get(position).getId();
-	            	HttpUtility.createIntent(PlacesActivity.this, PlaceDetailActivity.class, "Id",id);
+	            	HttpUtility.startIntent(PlacesActivity.this, PlaceDetailActivity.class, "Id",id);
 	            	/*placesList.get(position).setSelected(!placesList
 	                        .get(position).isSelected());
 	                if (placesList.get(position).isSelected())

@@ -36,23 +36,6 @@ public class WelcomeScreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome_screen);
-		findComponents();
-		new registeredEventsAsyncTask(HttpUtility.WaitMessage);
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.welcome_screen, menu);
-		return true;
-	}
-
-	private void bringRegistrations() {
-		new bringRegistrationsAsyncTask(HttpUtility.WaitMessage);
-	}
-
-	private void findComponents() {
 		bRegistrations = (Button) findViewById(R.id.wRegistrationsButton);
 		bRegistrations.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -63,28 +46,28 @@ public class WelcomeScreenActivity extends Activity {
 		bPlaces.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				new placesAsyncTask(HttpUtility.WaitMessage);
+				new placesAsyncTask(HttpUtility.WaitMessage).execute();
 			}
 		});
 
 		bInterests = (Button) findViewById(R.id.wInterestsButton);
 		bInterests.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				new interestsAsyncTask(HttpUtility.WaitMessage);
+				new interestsAsyncTask(HttpUtility.WaitMessage).execute();
 				if(!(HttpUtility.passedTags == null || HttpUtility.passedTags.length()<1))
 				{
-					new userInterestsAsyncTask(HttpUtility.WaitMessage);
+					new userInterestsAsyncTask(HttpUtility.WaitMessage).execute();;
 				}
 				
 				
-				HttpUtility.createIntent(WelcomeScreenActivity.this,
+				HttpUtility.startIntent(WelcomeScreenActivity.this,
 						UserInterestsActivity.class);
 			}
 		});
 		bEvents = (Button) findViewById(R.id.wEventsButton);
 		bEvents.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				new eventsAsyncTask(HttpUtility.WaitMessage);
+				new eventsAsyncTask(HttpUtility.WaitMessage).execute();;
 			}
 		});
 		bLocations = (Button) findViewById(R.id.wHistoryLocation);
@@ -99,6 +82,23 @@ public class WelcomeScreenActivity extends Activity {
 
 			}
 		});
+		new registeredEventsAsyncTask(HttpUtility.WaitMessage).execute();;
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.welcome_screen, menu);
+		return true;
+	}
+
+	protected void bringRegistrations() {
+		new bringRegistrationsAsyncTask(HttpUtility.WaitMessage).execute();;
+	}
+
+	private void findComponents() {
+		
 	}
 
 	private class placesAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -140,7 +140,7 @@ public class WelcomeScreenActivity extends Activity {
 
 				if (jsonArray != null && jsonArray.length() > 0) {
 					HttpUtility.passedPlaces = jsonArray;
-					HttpUtility.createIntent(WelcomeScreenActivity.this,
+					HttpUtility.startIntent(WelcomeScreenActivity.this,
 							PlacesActivity.class);
 
 				} else {
@@ -301,7 +301,7 @@ public class WelcomeScreenActivity extends Activity {
 
 				if (jsonArray != null && jsonArray.length() > 0) {
 					HttpUtility.passedUserEvents = jsonArray;
-					HttpUtility.createIntent(WelcomeScreenActivity.this,
+					HttpUtility.startIntent(WelcomeScreenActivity.this,
 							EventsActivity.class);
 
 				} else {
@@ -422,7 +422,7 @@ public class WelcomeScreenActivity extends Activity {
 
 				if (jsonArrayRegs != null && jsonArrayRegs.length() > 0) {
 					HttpUtility.passedUserRegistrations = jsonArrayRegs;
-					HttpUtility.createIntent(WelcomeScreenActivity.this,
+					HttpUtility.startIntent(WelcomeScreenActivity.this,
 							RegistrationsListActivity.class);
 
 				} else {

@@ -81,8 +81,8 @@ public class MainActivity extends Activity {
 
 
     protected void toRegisterActivity() {
-    	Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+    	HttpUtility.startIntent(MainActivity.this, RegisterActivity.class);
+
 		
 	}
 
@@ -125,9 +125,11 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
+        	posit = s.getSelectedItemPosition();
         	try {
 				jsonObject.put("Username", userNameStr);
 				jsonObject.put("Password", passStr);
+				jsonObject.put("Role", (posit+1));
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -135,7 +137,7 @@ public class MainActivity extends Activity {
 			}
         	
         
-        	posit = s.getSelectedItemPosition();
+        	
         	
         	
         	//pairs.add(new BasicNameValuePair("Id", String.valueOf(2)));
@@ -175,14 +177,33 @@ public class MainActivity extends Activity {
 	            		else{
 	            			HttpUtility.toastMessage(MainActivity.this, "Response: User Type not applicable");
 	            		}*/
-	            		HttpUtility.toastMessage(MainActivity.this, "Found with id: "+jsonObjectU.getString("Id")+" and name: "+ jsonObjectU.getString("Name") );
-	            		HttpUtility.createIntent(MainActivity.this, WelcomeScreenActivity.class );
+	            		int role = Integer.parseInt(jsonObjectU.getString("Role"));
+	            		HttpUtility.toastMessage(MainActivity.this, "Found with id: "+jsonObjectU.getString("Id")+" and name: "+ jsonObjectU.getString("Username") );
+	            		if(role ==2 )
+	            		{
+	            			HttpUtility.startIntent(MainActivity.this, OwnerActivity.class );
+	            		}
+	            		else if(role == 1)
+	            		{
+	            			HttpUtility.startIntent(MainActivity.this, WelcomeScreenActivity.class );
+	            		}
+	            		else
+	            		{
+	            			HttpUtility.toastMessage(MainActivity.this, "User not found");
+	            		}
+	            		
+	            		
+
 	            	}
 	            		/*JSONObject js = new JSONObject(jsonObjectUstr);
 	            		String gett = js.getString("Password");
 	            	*/
 	            	//	HttpUtility.toastMessage(MainActivity.this, arr.toString());
-	            	else{
+	            	else if (jsonObject == null){
+	            		HttpUtility.toastMessage(MainActivity.this, "User not found");
+	            		
+	            	}
+	            	else {
 	            		HttpUtility.toastMessage(MainActivity.this, "not found: "+ jsonObjectU.toString() );
 	            	}
 

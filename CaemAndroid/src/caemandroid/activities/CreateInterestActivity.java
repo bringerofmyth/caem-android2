@@ -45,7 +45,7 @@ public class CreateInterestActivity extends Activity {
 					
 				}
 				else{
-					new createInterestsAsyncTask (HttpUtility.WaitMessage);
+					new createInterestsAsyncTask (HttpUtility.WaitMessage).execute();
 				}
 				
 			}

@@ -37,10 +37,10 @@ public class RegisterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
-		userType = (Spinner) findViewById(R.id.rUsertypeSpinner);
+		/*userType = (Spinner) findViewById(R.id.rUsertypeSpinner);
 	        ArrayAdapter adapter = new ArrayAdapter(this,
 	        android.R.layout.simple_spinner_item, array_spinner);
-	        userType.setAdapter(adapter);
+	        userType.setAdapter(adapter);*/
 	        username = (EditText) findViewById(R.id.rUsernameEdit);
 	        pass = (EditText) findViewById(R.id.rPasswordEdit);
 	        name = (EditText) findViewById(R.id.rNameEdit);
@@ -65,7 +65,7 @@ public class RegisterActivity extends Activity {
 	        cancel = (Button) findViewById(R.id.rCancelButton);
 	        cancel.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
-	            	HttpUtility.createIntent(RegisterActivity.this, MainActivity.class);
+	            	HttpUtility.startIntent(RegisterActivity.this, MainActivity.class);
 	            }
 	        });
 	}
@@ -90,7 +90,7 @@ public class RegisterActivity extends Activity {
     		strName = name.getText().toString();
     		strPhone = phone.getText().toString();
     		strSurname = surname.getText().toString();
-    		strUserType = String.valueOf(userType.getSelectedItemPosition());
+    		//strUserType = String.valueOf(userType.getSelectedItemPosition());
     		return true;
     	}
 	}
@@ -114,7 +114,7 @@ public class RegisterActivity extends Activity {
         	pairs.add(new BasicNameValuePair("Name", strName));
         	pairs.add(new BasicNameValuePair("Phone", strPhone));
         	pairs.add(new BasicNameValuePair("Surname", strSurname));
-        	pairs.add(new BasicNameValuePair("UserType", strUserType));
+        	//pairs.add(new BasicNameValuePair("UserType", strUserType));
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
@@ -138,7 +138,7 @@ public class RegisterActivity extends Activity {
 		           	 
 	            	if(jsonObject !=null && jsonObject.getString("Id")!=null && !jsonObject.getString("Id").isEmpty() ){
 	            		HttpUtility.passedJson = jsonObject;
-	            		HttpUtility.createIntent(RegisterActivity.this, WelcomeScreenActivity.class );
+	            		HttpUtility.startIntent(RegisterActivity.this, WelcomeScreenActivity.class );
 
 		            	return;
 	            	}

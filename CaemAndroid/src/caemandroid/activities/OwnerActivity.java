@@ -1,5 +1,7 @@
 package caemandroid.activities;
 
+import caemandroid.http.HttpUtility;
+
 import com.example.caemandroid.R;
 import com.example.caemandroid.R.id;
 import com.example.caemandroid.R.layout;
@@ -22,7 +24,13 @@ public class OwnerActivity extends Activity {
 		cEvent = (Button) findViewById(R.id.oCreateEventButton);
 		cEvent.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
-	            	
+	            	HttpUtility.startIntent(OwnerActivity.this, CreateEventActivity.class);
+	            }
+	        });
+		cTag = (Button) findViewById(R.id.oCreateCategoryButton);
+		cTag.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	            	HttpUtility.startIntent(OwnerActivity.this, CreateInterestActivity.class);
 	            }
 	        });
 	}

@@ -316,19 +316,19 @@ public class HttpUtility {
 		}
 	}
 
-	public static void createIntent(Context ctx, Class<?> cls) {
+	public static void startIntent(Context ctx, Class<?> cls) {
 		Intent intent = new Intent(ctx, cls);
 		ctx.startActivity(intent);
 	}
 
-	public static void createIntent(Context ctx, Class<?> cls, String putName,
+	public static void startIntent(Context ctx, Class<?> cls, String putName,
 			String putValue) {
 		Intent intent = new Intent(ctx, cls);
 		intent.putExtra(putName, putValue);
 		ctx.startActivity(intent);
 	}
 
-	public static void createIntent(Context ctx, Class<?> cls, String putName,
+	public static void startIntent(Context ctx, Class<?> cls, String putName,
 			Serializable putValue) {
 		Intent intent = new Intent(ctx, cls);
 		intent.putExtra(putName, putValue);

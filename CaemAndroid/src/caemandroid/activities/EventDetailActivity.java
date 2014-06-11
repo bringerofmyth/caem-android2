@@ -72,7 +72,7 @@ public class EventDetailActivity extends Activity {
 
 	private void registerUser(){
 		
-		new registerUserAsyncTask(HttpUtility.WaitMessage);
+		new registerUserAsyncTask(HttpUtility.WaitMessage).execute();
 	}
 	private boolean isRegistered()
 	{
