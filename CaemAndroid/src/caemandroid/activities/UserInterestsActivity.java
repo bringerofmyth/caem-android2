@@ -57,6 +57,7 @@ public class UserInterestsActivity extends Activity {
 		
 		InterestListAdapter interestListAdapter = new InterestListAdapter();
 	     view1.setAdapter(interestListAdapter);
+	     
 	     saveButton = (Button) findViewById(R.id.intSaveButton);
 	     saveButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -72,7 +73,7 @@ public class UserInterestsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				
+				HttpUtility.startIntent(UserInterestsActivity.this, CreateInterestActivity.class);
 				
 			}
 		});
@@ -93,24 +94,28 @@ public class UserInterestsActivity extends Activity {
 				
 				for (int i=0; i<cast.length(); i++) {
 				    JSONObject pla = cast.getJSONObject(i);
-				    InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Name"));
+				    InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Title"));
 				    interestList.add(h);
 
 				    //hotelArray[i] =h;
 				}
-				for (int i=0; i<userCast.length(); i++) {
-				    JSONObject pla = userCast.getJSONObject(i);
-				    InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Name"));
-				    userInterestList.add(h);				    
-				}
-				for (InterestsListObject inl : userInterestList) {
-					for (InterestsListObject all : interestList) {
-						if(all.getId().equals(inl)){
-							all.setSelected(true);
-							break;
+				if(userCast.length()>0){
+					for (int i=0; i<userCast.length(); i++) {
+					    JSONObject pla = userCast.getJSONObject(i);
+					    InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Title"));
+					    userInterestList.add(h);				    
+					}
+					for (InterestsListObject inl : userInterestList) {
+						for (InterestsListObject all : interestList) {
+							if(all.getId().equals(inl)){
+								all.setSelected(true);
+								break;
+							}
 						}
 					}
 				}
+				
+
 				
 			}catch (JSONException e) {
 				// TODO Auto-generated catch block

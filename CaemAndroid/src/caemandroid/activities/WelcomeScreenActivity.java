@@ -36,6 +36,8 @@ public class WelcomeScreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome_screen);
+		new interestsAsyncTask(HttpUtility.WaitMessage).execute();
+		
 		bRegistrations = (Button) findViewById(R.id.wRegistrationsButton);
 		bRegistrations.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -53,7 +55,7 @@ public class WelcomeScreenActivity extends Activity {
 		bInterests = (Button) findViewById(R.id.wInterestsButton);
 		bInterests.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				new interestsAsyncTask(HttpUtility.WaitMessage).execute();
+				//new interestsAsyncTask(HttpUtility.WaitMessage).execute();
 				if(!(HttpUtility.passedTags == null || HttpUtility.passedTags.length()<1))
 				{
 					new userInterestsAsyncTask(HttpUtility.WaitMessage).execute();;
@@ -82,7 +84,7 @@ public class WelcomeScreenActivity extends Activity {
 
 			}
 		});
-		new registeredEventsAsyncTask(HttpUtility.WaitMessage).execute();;
+		//new registeredEventsAsyncTask(HttpUtility.WaitMessage).execute();;
 
 	}
 
@@ -249,6 +251,12 @@ public class WelcomeScreenActivity extends Activity {
 				dialog.dismiss();
 			try {
 
+				if(jsonArray!=null && jsonArray.length()>0){
+					HttpUtility.toastMessage(WelcomeScreenActivity.this, "Tags received...");
+				}
+				else{
+					HttpUtility.toastMessage(WelcomeScreenActivity.this, "No tags found...");
+				}
 				HttpUtility.passedTags = jsonArray;
 
 

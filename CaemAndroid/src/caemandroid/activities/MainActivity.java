@@ -181,7 +181,8 @@ public class MainActivity extends Activity {
 	            		HttpUtility.toastMessage(MainActivity.this, "Found with id: "+jsonObjectU.getString("Id")+" and name: "+ jsonObjectU.getString("Username") );
 	            		if(role ==2 )
 	            		{
-	            			HttpUtility.startIntent(MainActivity.this, OwnerActivity.class );
+	            			//HttpUtility.startIntent(MainActivity.this, OwnerActivity.class );
+	            			HttpUtility.startIntent(MainActivity.this, WelcomeScreenActivity.class );
 	            		}
 	            		else if(role == 1)
 	            		{
