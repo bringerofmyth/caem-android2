@@ -185,19 +185,24 @@ public class HttpUtility {
 			}
 		} else {
 			Log.e("==>", "Failed to download file");
+			return null;
 		}
 	} catch (ClientProtocolException e) {
 		e.printStackTrace();
+		return null;
 	} catch (IOException e) {
 		e.printStackTrace();
+		return null;
 	}
 
 	// Parse String to JSON object
 	try {
+		
 		jarray = new JSONArray(builder.toString());
 		
 	} catch (JSONException e) {
 		Log.e("JSON Parser", "Error parsing data " + e.toString());
+		return null;
 	}
 
 	// return JSON Object
@@ -448,6 +453,82 @@ public static JSONArray createPostList(String url, JSONObject entity) {
 		
 		return js;
 	}
+public static JSONArray createPostList(String url, JSONObject entity,List<NameValuePair> pairs) {
+	
+	HttpClient client = new DefaultHttpClient();
+	String nUrl = arrangeUrl(url, pairs);
+	HttpPost post = new HttpPost(nUrl);
+	String result = "";
+	JSONArray js = null;
+	try {
+		//HttpClient httpclient = new DefaultHttpClient();
+		//HttpPost httppost = new HttpPost(urls[0]);
+		StringEntity params = new StringEntity(entity.toString());
+
+		params.setContentType("application/json;charset=UTF-8");
+		params.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+				"application/json;charset=UTF-8"));
+		post.setHeader("Accept", "application/json");
+
+		post.setEntity(params);
+		HttpResponse response = client.execute(post);
+		result = EntityUtils.toString(response.getEntity());
+			js = new JSONArray(result);
+		//Sonuc = EntityUtils.toString(response.getEntity());
+		
+
+		// responseBody = EntityUtils.toString(response.getEntity());
+
+
+	} catch (ClientProtocolException e) {
+		// TODO Auto-generated catch block
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return js;
+}
+public static JSONArray createPostList2(String url,List<NameValuePair> pairs) {
+	
+	HttpClient client = new DefaultHttpClient();
+	String nUrl = arrangeUrl(url, pairs);
+	HttpPost post = new HttpPost(nUrl);
+	String result = "";
+	JSONArray js = null;
+	try {
+		//HttpClient httpclient = new DefaultHttpClient();
+		//HttpPost httppost = new HttpPost(urls[0]);
+		StringEntity params = new StringEntity("");
+
+		params.setContentType("application/json;charset=UTF-8");
+		params.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
+				"application/json;charset=UTF-8"));
+		post.setHeader("Accept", "application/json");
+
+		post.setEntity(params);
+		HttpResponse response = client.execute(post);
+		result = EntityUtils.toString(response.getEntity());
+			js = new JSONArray(result);
+		//Sonuc = EntityUtils.toString(response.getEntity());
+		
+
+		// responseBody = EntityUtils.toString(response.getEntity());
+
+
+	} catch (ClientProtocolException e) {
+		// TODO Auto-generated catch block
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return js;
+}
 	
 
 }

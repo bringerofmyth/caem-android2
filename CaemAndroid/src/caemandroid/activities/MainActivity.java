@@ -101,12 +101,12 @@ public class MainActivity extends Activity {
     	
     }
 	protected void toLoginActivity() {
-		if(!validationCheck()){
+		/*if(!validationCheck()){
 			Toast.makeText(this, "Please fill all fields.",Toast.LENGTH_SHORT ).show();
 		}
-		else{
+		else{*/
 			new loginAsyncTask(HttpUtility.WaitMessage).execute();
-		}
+		//}
 		
 	}
 	@SuppressLint("NewApi")
@@ -127,9 +127,12 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
         	posit = s.getSelectedItemPosition();
         	try {
-				jsonObject.put("Username", userNameStr);
+				/*jsonObject.put("Username", userNameStr);
 				jsonObject.put("Password", passStr);
-				jsonObject.put("Role", (posit+1));
+				jsonObject.put("Role", (posit+1));*/
+        		jsonObject.put("Username", "user1");
+				jsonObject.put("Password", "q");
+				jsonObject.put("Role", (2));
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

@@ -30,7 +30,7 @@ public class WelcomeScreenActivity extends Activity {
 
 	private Button bPlaces, bInterests, bEvents, bLocations, bMessages,
 			bRegistrations;
-	private JSONArray jsonArray, jsonArrayRegs;
+	private JSONArray jsonArrayU,jsonArrayA, jsonArrayP,jsonArrayE, jsonArrayRegs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +128,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArray = HttpUtility.createGetList(
+			jsonArrayP = HttpUtility.createGetList(
 					HttpUtility.GET_RECOMM_PLACES_URL, pairs);
 			return null;
 		}
@@ -140,8 +140,8 @@ public class WelcomeScreenActivity extends Activity {
 				dialog.dismiss();
 			try {
 
-				if (jsonArray != null && jsonArray.length() > 0) {
-					HttpUtility.passedPlaces = jsonArray;
+				if (jsonArrayP != null && jsonArrayP.length() > 0) {
+					HttpUtility.passedPlaces = jsonArrayP;
 					HttpUtility.startIntent(WelcomeScreenActivity.this,
 							PlacesActivity.class);
 
@@ -189,7 +189,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArray = HttpUtility.createGetList(
+			jsonArrayU = HttpUtility.createGetList(
 					HttpUtility.GET_USER_TAGS_URL, pairs);
 			return null;
 		}
@@ -201,7 +201,14 @@ public class WelcomeScreenActivity extends Activity {
 				dialog.dismiss();
 			try {
 
-				HttpUtility.passedUserTags = jsonArray;
+				if(jsonArrayU == null ||jsonArrayU.length()<1  ){
+					HttpUtility.toastMessage(WelcomeScreenActivity.this,
+							"User interests not added yet.");
+				}
+				else{
+					HttpUtility.passedUserTags = jsonArrayU;
+				}
+				
 				
 
 			} catch (Exception e) {
@@ -239,7 +246,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArray = HttpUtility.createGetList(
+			jsonArrayA = HttpUtility.createGetList(
 					HttpUtility.GET_TAGS_URL, null);
 			return null;
 		}
@@ -251,13 +258,13 @@ public class WelcomeScreenActivity extends Activity {
 				dialog.dismiss();
 			try {
 
-				if(jsonArray!=null && jsonArray.length()>0){
+				if(jsonArrayA!=null && jsonArrayA.length()>0){
 					HttpUtility.toastMessage(WelcomeScreenActivity.this, "Tags received...");
 				}
 				else{
 					HttpUtility.toastMessage(WelcomeScreenActivity.this, "No tags found...");
 				}
-				HttpUtility.passedTags = jsonArray;
+				HttpUtility.passedTags = jsonArrayA;
 
 
 			} catch (Exception e) {
@@ -295,7 +302,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArray = HttpUtility.createGetList(
+			jsonArrayE = HttpUtility.createGetList(
 					HttpUtility.GET_RECOMM_EVENTS_URL, pairs);
 			return null;
 		}
@@ -307,8 +314,8 @@ public class WelcomeScreenActivity extends Activity {
 				dialog.dismiss();
 			try {
 
-				if (jsonArray != null && jsonArray.length() > 0) {
-					HttpUtility.passedUserEvents = jsonArray;
+				if (jsonArrayE != null && jsonArrayE.length() > 0) {
+					HttpUtility.passedUserEvents = jsonArrayE;
 					HttpUtility.startIntent(WelcomeScreenActivity.this,
 							EventsActivity.class);
 
@@ -356,7 +363,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArray = HttpUtility.createGetList(
+			jsonArrayE = HttpUtility.createGetList(
 					HttpUtility.GET_USER_REGISTERED_EVENTS_URL, pairs);
 			return null;
 		}
@@ -368,8 +375,8 @@ public class WelcomeScreenActivity extends Activity {
 				dialog.dismiss();
 			try {
 
-				if (jsonArray != null && jsonArray.length() > 0) {
-					HttpUtility.passedUserEvents = jsonArray;
+				if (jsonArrayE != null && jsonArrayE.length() > 0) {
+					HttpUtility.passedUserEvents = jsonArrayE;
 
 				} else {
 					HttpUtility.toastMessage(WelcomeScreenActivity.this,

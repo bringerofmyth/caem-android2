@@ -14,6 +14,7 @@ import caemandroid.activities.PlacesActivity.PlaceListAdapter.PlaceViewHolder;
 import caemandroid.entity.EventsListObject;
 import caemandroid.entity.InterestsListObject;
 import caemandroid.entity.PlacesListObject;
+import caemandroid.entity.Tag;
 import caemandroid.http.HttpUtility;
 
 import com.example.caemandroid.R;
@@ -21,24 +22,30 @@ import com.example.caemandroid.R.layout;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UserInterestsActivity extends Activity {
 
 	private JSONArray interests;
 	Activity myContext;
-
+	MyCustomAdapter dataAdapter = null;
 
 	private ListView view1;
 	private JSONObject json3;
@@ -46,23 +53,38 @@ public class UserInterestsActivity extends Activity {
 	private ArrayList<InterestsListObject> userInterestList;
 	private Button saveButton, createButton;
     private JSONArray jsonArray ;
+    ArrayList<InterestsListObject> selectedList = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_interests);
 		
-		view1 = (ListView) findViewById(R.id.inListView1);
-		arrangeInterests();
+		 displayListView();
+		 //checkButtonClick();
+		//arrangeInterests();
 		
 		
-		InterestListAdapter interestListAdapter = new InterestListAdapter();
-	     view1.setAdapter(interestListAdapter);
-	     
+		     
 	     saveButton = (Button) findViewById(R.id.intSaveButton);
 	     saveButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				StringBuffer responseText = new StringBuffer();
+			    responseText.append("The following were selected...\n");
+			 
+			    selectedList = dataAdapter.intList;
+			    for(int i=0;i<selectedList.size();i++){
+			    	InterestsListObject sTag = selectedList.get(i);
+			     if(!(sTag.isSelected())){
+			    	 selectedList.remove(sTag);
+			     }
+			    }
+			 
+			    /*Toast.makeText(getApplicationContext(),
+			      responseText, Toast.LENGTH_LONG).show();*/
+				
+			
 				new saveInterestsAsyncTask(HttpUtility.WaitMessage).execute();
 				
 			}
@@ -76,9 +98,86 @@ public class UserInterestsActivity extends Activity {
 				HttpUtility.startIntent(UserInterestsActivity.this, CreateInterestActivity.class);
 				
 			}
-		});
-	     
+	     });
+
 	}
+
+	private void displayListView() {
+
+		//Array list of countries
+		JSONArray cast = HttpUtility.passedTags;
+		JSONArray userCast = HttpUtility.passedUserTags;
+		if(cast ==null || cast.length()<1 ){
+			HttpUtility.toastMessage(UserInterestsActivity.this, "No interests found.");
+		}
+		else
+		{
+
+			interestList = new ArrayList<InterestsListObject>();
+			try {
+				if(userCast != null && userCast.length()>0){
+					for(int j = 0; j < cast.length(); j ++){
+						JSONObject obj;
+						obj = cast.getJSONObject(j);
+						//InterestsListObject h = new InterestsListObject(obj.getString("Id"), obj.getString("Title"));
+						String oId = obj.getString("Id");
+						for (int i=0; i<userCast.length(); i++) {
+							JSONObject pla;
+							pla = userCast.getJSONObject(i);
+							String uId = pla.getString("Id");
+							if(uId.equals(oId)){
+								modifyListObject(uId);
+							}
+
+						}
+
+					}
+
+				}
+				else{
+					for (int i=0; i<cast.length(); i++) {
+						JSONObject pla;
+
+						pla = cast.getJSONObject(i);
+						InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Title"));
+						interestList.add(h);
+						}
+			
+				}
+
+				
+			}catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				HttpUtility.toastMessage(UserInterestsActivity.this, e.getStackTrace().toString());
+			}
+			//hotelArray[i] =h;
+		}
+
+
+
+
+
+	  //create an ArrayAdaptar from the String Array
+	  dataAdapter = new MyCustomAdapter(this,
+	    R.layout.checkbox_list_interest, interestList);
+	  ListView listView = (ListView) findViewById(R.id.inListView1);
+	  // Assign adapter to ListView
+	  listView.setAdapter(dataAdapter);
+	 
+	 
+	/*  listView.setOnItemClickListener(new OnItemClickListener() {
+	   public void onItemClick(AdapterView<?> parent, View view,
+	     int position, long id) {
+	    // When clicked, show a toast with the TextView text
+	    Country country = (Country) parent.getItemAtPosition(position);
+	    Toast.makeText(getApplicationContext(),
+	      "Clicked on Row: " + country.getName(), 
+	      Toast.LENGTH_LONG).show();
+	   }
+	  });*/
+	 
+	 }
 	private void arrangeInterests(){
 		JSONArray cast = HttpUtility.passedTags;
 		JSONArray userCast = HttpUtility.passedUserTags;
@@ -99,7 +198,7 @@ public class UserInterestsActivity extends Activity {
 
 				    //hotelArray[i] =h;
 				}
-				if(userCast.length()>0){
+				if(userCast != null && userCast.length()>0){
 					for (int i=0; i<userCast.length(); i++) {
 					    JSONObject pla = userCast.getJSONObject(i);
 					    InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Title"));
@@ -126,7 +225,33 @@ public class UserInterestsActivity extends Activity {
 		
 		
 	}
-	
+	private void modifyListObject(String idd){
+		for (InterestsListObject o  : interestList) {
+			if(o.getId().equals(idd))
+			{
+				o.setSelected(true);
+				interestList.set(interestList.indexOf(o),o);
+			}
+		} 
+	}
+	private String createDTO(){
+		StringBuffer bfr = new StringBuffer();
+		if(selectedList != null && !selectedList.isEmpty()){
+			for (int i = 0 ; i < selectedList.size(); i++) {
+
+				bfr.append(selectedList.get(i).getId());
+				if(i<selectedList.size()-1){
+					bfr.append(",");
+				}
+
+			}
+			return bfr.toString();
+		}
+		else{
+			return null;
+		}
+		
+	}
 	private class saveInterestsAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
@@ -140,9 +265,14 @@ public class UserInterestsActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			try {
-				jo.put("userTagList", userInterestList);
-				jo.put("id", HttpUtility.passedUser);
-			} catch (JSONException e) {
+				Tag t = new Tag();
+				t.setTitle(createDTO());
+				//jo.put("userTagList", t);
+				pairs.add(new BasicNameValuePair("id", String.valueOf(HttpUtility.passedUser)));
+				pairs.add(new BasicNameValuePair("userTagList", t.getTitle()));
+
+				//jo.put("id", HttpUtility.passedUser);
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -159,7 +289,7 @@ public class UserInterestsActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArray = HttpUtility.createPostList(HttpUtility.POST_UPDATE_USER_TAGS_URL, jo);
+			jsonArray = HttpUtility.createPostList2(HttpUtility.POST_UPDATE_USER_TAGS_URL,pairs);
 			return null;
 		}
 
@@ -192,85 +322,93 @@ public class UserInterestsActivity extends Activity {
 
 		}
 	}
-	
-	class InterestListAdapter extends BaseAdapter {
+	 private class MyCustomAdapter extends ArrayAdapter<InterestsListObject> {
 		 
-	    @Override
-	    public int getCount() {
-	        return interestList.size();
-	    }
-	 
-	    @Override
-	    public Object getItem(int position) {
-	        return null;
-	    }
-	 
-	    @Override
-	    public long getItemId(int position) {
-	        return 0;
-	    }
-
-		class InterestViewHolder {
-		    TextView name;
-		}
-	    @Override
-	    public View getView(final int position, View convertView,
-	            ViewGroup parent) {
-	 
-	        // view holder kurulumu
-	        final InterestViewHolder interestViewHolder;
-	 
-	        if (convertView == null) {
-	 
-	            // satýr görseli oluþturma
-	            convertView = myContext.getLayoutInflater().inflate(
-	                    R.layout.list_interest_layout, parent, false);
-	 
-	            // view holderý sýfýrdan oluþturma
-	            interestViewHolder = new InterestViewHolder();
-	            interestViewHolder.name = (TextView) convertView
-	                    .findViewById(R.id.ly_interest_name);
-	        
-	 
-	            convertView.setTag(interestViewHolder);
-	        } else {
-	 
-	            // view holderý zaten daha önceden oluþturduðumuz
-	            // view holdera eþitleme
-	        	interestViewHolder = (InterestViewHolder) convertView.getTag();
-	        }
-	 
-	        // görsel elemanlarýn deðerlerini verme
-	        interestViewHolder.name.setText(interestList.get(position).getName());
-	        if (interestList.get(position).isSelected())
-            	interestViewHolder.name.setTextColor(Color.RED);
-
-	 
-	        // meyvenin durumuna göre isminin rengini deðiþtirme
-	        /*if (hotelList.get(position).isSelected)
-	            fruitViewHolder.name.setTextColor(Color.RED);
-	        else
-	            fruitViewHolder.name.setTextColor(Color.BLACK);*/
-	 
-	        convertView.setOnClickListener(new View.OnClickListener() {
-	 
-	            @Override
-	            public void onClick(View v) {
-	            	String id = interestList.get(position).getId();
-	            	//HttpUtility.createIntent(UserInterestsActivity.this, PlaceDetailActivity.class, "Id",id);
-	            	interestList.get(position).setSelected(!interestList
-	                        .get(position).isSelected());
-	                if (interestList.get(position).isSelected())
-	                	interestViewHolder.name.setTextColor(Color.RED);
-	                else
-	                	interestViewHolder.name.setTextColor(Color.BLACK);
-	            	
-	            }
-	        });
-	 
-	        return convertView;
-	    }
-	}
+		  private ArrayList<InterestsListObject> intList;
+		 
+		  public MyCustomAdapter(Context context, int textViewResourceId,    ArrayList<InterestsListObject> interestList) {
+		   super(context, textViewResourceId, interestList);
+		   this.intList = new ArrayList<InterestsListObject>();
+		   this.intList.addAll(interestList);
+		  }
+		 
+		  private class ViewHolder {
+		   //TextView code;
+		   CheckBox name;
+		  }
+		 
+		  @Override
+		  public View getView(int position, View convertView, ViewGroup parent) {
+		 
+		   ViewHolder holder = null;
+		   Log.v("ConvertView", String.valueOf(position));
+		 
+		   if (convertView == null) {
+		   LayoutInflater vi = (LayoutInflater)getSystemService(
+		     Context.LAYOUT_INFLATER_SERVICE);
+		   convertView = vi.inflate(R.layout.checkbox_list_interest, null);
+		 
+		   holder = new ViewHolder();
+		  // holder.code = (TextView) convertView.findViewById(R.id.code);
+		   holder.name = (CheckBox) convertView.findViewById(R.id.ly_ch_interest_checkBox1);
+		   convertView.setTag(holder);
+		 
+		    holder.name.setOnClickListener( new View.OnClickListener() {  
+		     public void onClick(View v) {  
+		      CheckBox cb = (CheckBox) v ;  
+		      InterestsListObject country = (InterestsListObject) cb.getTag();  
+		      Toast.makeText(getApplicationContext(),
+		       "Clicked on Checkbox: " + cb.getText() +
+		       " is " + cb.isChecked(), 
+		       Toast.LENGTH_LONG).show();
+		      country.setSelected(cb.isChecked());
+		     }  
+		    });  
+		   } 
+		   else {
+		    holder = (ViewHolder) convertView.getTag();
+		   }
+		 
+		   InterestsListObject country = intList.get(position);
+		 //  holder.code.setText(" (" +  country.getCode() + ")");
+		   holder.name.setText(country.getName());
+		   holder.name.setChecked(country.isSelected());
+		   holder.name.setTag(country);
+		 
+		   return convertView;
+		 
+		  }
+		 
+		 }
+		 
+		 private void checkButtonClick() {
+		 
+		 
+		  Button myButton = (Button) findViewById(R.id.intSaveButton);
+		  myButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			    StringBuffer responseText = new StringBuffer();
+			    responseText.append("The following were selected...\n");
+			 
+			    ArrayList<InterestsListObject> countryList = dataAdapter.intList;
+			    for(int i=0;i<countryList.size();i++){
+			    	InterestsListObject country = countryList.get(i);
+			     if(country.isSelected()){
+			      responseText.append("\n" + country.getName());
+			     }
+			    }
+			 
+			    Toast.makeText(getApplicationContext(),
+			      responseText, Toast.LENGTH_LONG).show();
+				
+			}
+			});
+		  
 	
 	
+		 }
 }
+	
+
