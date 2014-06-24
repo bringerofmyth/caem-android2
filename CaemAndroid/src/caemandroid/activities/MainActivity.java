@@ -244,10 +244,20 @@ private boolean checkPlayServices() {
         	try {
 				/*jsonObject.put("Username", userNameStr);
 				jsonObject.put("Password", passStr);
-				jsonObject.put("Role", (posit+1));*/
+				jsonObject.put("Role", (posit+1));
         		jsonObject.put("Username", "user1");
 				jsonObject.put("Password", "q");
-				jsonObject.put("Role", (2));
+				jsonObject.put("Role", (2));*/
+				if(posit==0){
+					jsonObject.put("Username", "user1");
+					jsonObject.put("Password", "q");
+					jsonObject.put("Role", (2));
+				}
+				else{
+					jsonObject.put("Username", "owner");
+					jsonObject.put("Password", "q");
+					jsonObject.put("Role", (1));
+				}
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

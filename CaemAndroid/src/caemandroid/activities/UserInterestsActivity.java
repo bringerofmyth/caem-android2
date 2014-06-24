@@ -72,14 +72,15 @@ public class UserInterestsActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				StringBuffer responseText = new StringBuffer();
-			    responseText.append("The following were selected...\n");
-			 
-			    selectedList = dataAdapter.intList;
-			    for(int i=0;i<selectedList.size();i++){
-			    	InterestsListObject sTag = selectedList.get(i);
-			     if(!(sTag.isSelected())){
-			    	 selectedList.remove(sTag);
+				/*StringBuffer responseText = new StringBuffer();
+			    responseText.append("The following were selected...\n");*/
+				selectedList =null;
+				selectedList = new ArrayList<InterestsListObject>();
+			    selectedList.addAll(dataAdapter.intList);
+			    for (InterestsListObject  elm : dataAdapter.intList) {
+			    	
+			     if(!(elm.isSelected())){
+			    	 selectedList.remove(elm);
 			     }
 			    }
 			 
@@ -217,8 +218,7 @@ public class UserInterestsActivity extends Activity {
 	private class saveInterestsAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
-		JSONObject jo = new JSONObject();
+		JSONObject j = new JSONObject();
 		public saveInterestsAsyncTask(String mMesaj) {
 			this.modalMesaj = mMesaj;
 			this.dialog = new ProgressDialog(UserInterestsActivity.this);
@@ -229,9 +229,9 @@ public class UserInterestsActivity extends Activity {
 			try {
 				Tag t = new Tag();
 				t.setTitle(createDTO());
-				//jo.put("userTagList", t);
-				pairs.add(new BasicNameValuePair("id", String.valueOf(HttpUtility.passedUser)));
-				pairs.add(new BasicNameValuePair("userTagList", t.getTitle()));
+				j.put("Title", t.getTitle());
+				j.put("Id", String.valueOf(HttpUtility.passedUser));
+			
 
 				//jo.put("id", HttpUtility.passedUser);
 			} catch (Exception e) {
@@ -251,7 +251,7 @@ public class UserInterestsActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArray = HttpUtility.createPostList2(HttpUtility.POST_UPDATE_USER_TAGS_URL,pairs);
+			jsonArray = HttpUtility.createPostList(HttpUtility.POST_UPDATE_USER_TAGS_URL,j);
 			return null;
 		}
 
@@ -319,10 +319,10 @@ public class UserInterestsActivity extends Activity {
 		     public void onClick(View v) {  
 		      CheckBox cb = (CheckBox) v ;  
 		      InterestsListObject country = (InterestsListObject) cb.getTag();  
-		      Toast.makeText(getApplicationContext(),
+		      /*Toast.makeText(getApplicationContext(),
 		       "Clicked on Checkbox: " + cb.getText() +
 		       " is " + cb.isChecked(), 
-		       Toast.LENGTH_LONG).show();
+		       Toast.LENGTH_LONG).show();*/
 		      country.setSelected(cb.isChecked());
 		     }  
 		    });  

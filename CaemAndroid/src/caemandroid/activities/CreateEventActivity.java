@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import caemandroid.entity.InterestsListObject;
 import caemandroid.entity.Tag;
 import caemandroid.http.HttpUtility;
 
@@ -34,6 +35,7 @@ public class CreateEventActivity extends Activity {
 	private List<Tag> selectedTags = new ArrayList();
 	private String strTitle, strStartTime, strStartDate, strFinishTime, strFinishDate, strDesc;
 	private JSONObject jsonObject = null;
+	private ArrayList<InterestsListObject> taglist = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class CreateEventActivity extends Activity {
 			HttpUtility.toastMessage(CreateEventActivity.this, "Please fill required fields");
 		}
 		else{
+			taglist  = (ArrayList<InterestsListObject>) getIntent().getSerializableExtra("SelectedListTag");
 			new createEventAsyncTask(HttpUtility.WaitMessage).execute();
 		}
 	
@@ -103,7 +106,7 @@ public class CreateEventActivity extends Activity {
 		String modalMesaj;
 		ProgressDialog dialog;
 		List<NameValuePair> pairs = new ArrayList <NameValuePair>(0);
-		
+		String tags=null;
 
         public createEventAsyncTask(String mMesaj) {
             this.modalMesaj = mMesaj;
@@ -112,22 +115,18 @@ public class CreateEventActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            
+            if(taglist !=null && !taglist.isEmpty()){
+            	tags = HttpUtility.composeTagDTO(taglist);
+            	pairs.add(new BasicNameValuePair("Tags", tags));
+            }
         	pairs.add(new BasicNameValuePair("Title", strTitle));
         	pairs.add(new BasicNameValuePair("StartTime", strStartTime));
         	//pairs.add(new BasicNameValuePair("StartDate", strStartDate));
         	//pairs.add(new BasicNameValuePair("FinishDate", strFinishDate));
         	pairs.add(new BasicNameValuePair("FinishTime",strFinishTime));
-        	pairs.add(new BasicNameValuePair("Description", strDesc));
-        	int ids=-1;
-        	int sSize = selectedTags.size();
-        	if(sSize>0 ){
-        		
-        	}
-        	for (int i = 0; i < selectedTags.size(); i++) {
-				ids= selectedTags.get(i).getId();
-				pairs.add(new BasicNameValuePair("tag[]",String.valueOf(ids)));
-			}
+        	//pairs.add(new BasicNameValuePair("Description", strDesc));
+        	
+
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);

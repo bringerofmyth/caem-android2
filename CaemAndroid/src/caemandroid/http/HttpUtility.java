@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import caemandroid.entity.Event;
+import caemandroid.entity.InterestsListObject;
 import caemandroid.entity.Place;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -619,19 +620,24 @@ public static JSONArray createPostList2(String url,List<NameValuePair> pairs) {
 	
 	return js;
 }
+public static String composeTagDTO(ArrayList<InterestsListObject> selectedList){
 	
+	if(selectedList != null && !selectedList.isEmpty()){
+		StringBuffer bfr = new StringBuffer();
+		for (int i = 0 ; i < selectedList.size(); i++) {
+
+			bfr.append(selectedList.get(i).getId());
+			if(i<selectedList.size()-1){
+				bfr.append(",");
+			}
+
+		}
+		return bfr.toString();
+	}
+	else{
+		return null;
+	}
+	
+}
 
 }
-/*HttpClient httpclient = new DefaultHttpClient();
-				HttpPost httppost = new HttpPost(urls[0]);
-				StringEntity params = new StringEntity(urls[1].toString());
-
-				params.setContentType("application/json;charset=UTF-8");
-				params.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,
-						"application/json;charset=UTF-8"));
-				httppost.setHeader("Accept", "application/json");
-
-				httppost.setEntity(params);
-				HttpResponse response = httpclient.execute(httppost);
-
-				Sonuc = EntityUtils.toString(response.getEntity());*/

@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import caemandroid.entity.InterestsListObject;
 import caemandroid.http.HttpUtility;
 
 import com.example.caemandroid.R;
@@ -28,6 +29,7 @@ public class CreateInterestActivity extends Activity {
 	private EditText text ;
 	String textS = null;
 	JSONObject jsonObject = null;
+	ArrayList<InterestsListObject> taglist = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,11 +41,13 @@ public class CreateInterestActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				textS = text.getText().toString();
+				
 				if(HttpUtility.isNullOrEmpty(textS))
 				{
 					HttpUtility.toastMessage(CreateInterestActivity.this, "Please write something");
 					
 				}
+			
 				else{
 					new createInterestsAsyncTask (HttpUtility.WaitMessage).execute();
 				}
@@ -97,7 +101,7 @@ public class CreateInterestActivity extends Activity {
 				if (jsonObject != null && jsonObject.getString("Id")!=null) {
 
 				HttpUtility.toastMessage(CreateInterestActivity.this,""+jsonObject.getString("Title")+ " interest saved.");
-
+				text.setText("");
 				} else {
 					HttpUtility.toastMessage(CreateInterestActivity.this,
 							"Interest could not be save "+jsonObject.toString());
