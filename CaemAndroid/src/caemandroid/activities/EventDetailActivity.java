@@ -23,30 +23,30 @@ import android.app.ProgressDialog;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 public class EventDetailActivity extends Activity {
 
-	private JSONObject jsonObject;
+	private JSONObject jsonObjectO, jsonObject2;
 	private String eventId = "";
 	private boolean isUserRegistered = false;
 	private Button register, back;
-	private EditText title, startTime, finishTime, eventType, description;
+	private TextView title, startTime, finishTime, eventType, description;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_detail);
-		title = (EditText) findViewById(R.id.edTitleText);
-		startTime = (EditText) findViewById(R.id.edStartTimeText);
-		finishTime = (EditText) findViewById(R.id.edFinishTimeText);
-		eventType = (EditText) findViewById(R.id.edEventTypeText);
-		description = (EditText) findViewById(R.id.edDescriptionText);
+		title = (TextView) findViewById(R.id.edTitleText);
+		startTime = (TextView) findViewById(R.id.edStartTimeText);
+		finishTime = (TextView) findViewById(R.id.edFinishTimeText);
+		eventType = (TextView) findViewById(R.id.edEventTypeText);
+		description = (TextView) findViewById(R.id.edDescriptionText);
 		register = (Button) findViewById(R.id.edRegisterButton);
 		
 		 
 		eventId = getIntent().getStringExtra("Id");
 		requestEvent();
-		isUserRegistered = isRegistered();
+		isUserRegistered = false;//isRegistered();
 		
 		register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -63,7 +63,7 @@ public class EventDetailActivity extends Activity {
 		back = (Button) findViewById(R.id.edBackButton);
 		back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	finish();
+            	//finish();
             	
             }
         });
@@ -114,23 +114,11 @@ public class EventDetailActivity extends Activity {
 		if (eventId== null || eventId.equals(""))
 		{
 			HttpUtility.toastMessage(this, "No event retrieved");
-			finish();
+			//finish();
 		}
 		else{
 			new eventAsyncTask(HttpUtility.WaitMessage).execute();
-			Event p = HttpUtility.parseEvent(jsonObject);
-			if(p !=null) {
-				title.setText(p.getTitle());
-				startTime.setText(p.getStartTime());
-				description.setText(p.getDescription());
-				finishTime.setText(p.getFinishTime());
-				eventType.setText(p.getEventType());
-				
-			}
-			else{
-				HttpUtility.toastMessage(this, "No event retrieved in parsing");
-				finish();
-			}
+		
 
 		}
 	}
@@ -138,8 +126,7 @@ public class EventDetailActivity extends Activity {
 	private class eventAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList <NameValuePair>(1);
-
+	
         public eventAsyncTask(String mMesaj) {
             this.modalMesaj = mMesaj;
             this.dialog = new ProgressDialog(EventDetailActivity.this);
@@ -148,8 +135,7 @@ public class EventDetailActivity extends Activity {
         
         @Override
         protected void onPreExecute() {
-        	
-        	pairs.add(new BasicNameValuePair("Id", eventId));
+
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
@@ -160,23 +146,41 @@ public class EventDetailActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createGetRequest(HttpUtility.GET_EVENT_URL, pairs);
+			jsonObject2 = HttpUtility.createGetRequestSingle(HttpUtility.GET_EVENT_URL, String.valueOf(eventId));
 			return null;
 		}
 		 @Override
 	        protected void onPostExecute(Void str) {
 	 
-	            if (dialog.isShowing())
-	                dialog.dismiss();
+			 try{
+		            if (dialog.isShowing())
+		                dialog.dismiss();
+			 }catch(Exception e){
+				 
+			 }
+
 	            try {
 		           	 
-	            	if(jsonObject !=null && !HttpUtility.isNullOrEmpty(jsonObject.getString("Title"))){
-	            		HttpUtility.passedJson = jsonObject;
+	            	if(jsonObject2 !=null && !HttpUtility.isNullOrEmpty(jsonObject2.getString("Title"))){
+	            		HttpUtility.passedJson = jsonObject2;
+	            		Event p = HttpUtility.parseEvent(jsonObject2);
+	        			if(p !=null) {
+	        				title.setText(p.getTitle());
+	        				startTime.setText(p.getStartTime());
+	        				description.setText(p.getDescription());
+	        				finishTime.setText(p.getFinishTime());
+	        				//eventType.setText(p.getEventType());
+	        				
+	        			}
+	        			else{
+	        				HttpUtility.toastMessage(EventDetailActivity.this, "No event retrieved in parsing");
+	        				//finish();
+	        			}
 	            	
 	            	}
 	            	else{
 		            	HttpUtility.toastMessage(EventDetailActivity.this, "No event found.");
-		            	finish();
+		            	//finish();
 	            	}
 
 	            	
@@ -228,7 +232,7 @@ public class EventDetailActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_REGISTER_USERTOEVENT_URL, jO);
+			jsonObjectO = HttpUtility.createPostRequest(HttpUtility.POST_REGISTER_USERTOEVENT_URL, jO);
 			return null;
 		}
 		 @Override
@@ -238,8 +242,8 @@ public class EventDetailActivity extends Activity {
 	                dialog.dismiss();
 	            try {
 		           	 
-	            	if(jsonObject !=null && !HttpUtility.isNullOrEmpty(jsonObject.getString("Id"))){
-	            		HttpUtility.passedRegisterInfoJson = jsonObject;
+	            	if(jsonObjectO !=null && !HttpUtility.isNullOrEmpty(jsonObjectO.getString("Id"))){
+	            		HttpUtility.passedRegisterInfoJson = jsonObjectO;
 	            		HttpUtility.toastMessage(EventDetailActivity.this, "You are registered!");
 	            		modifyRegisterButtonView(true);
 	            	

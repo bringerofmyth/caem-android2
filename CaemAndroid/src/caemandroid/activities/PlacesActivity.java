@@ -37,6 +37,7 @@ public class PlacesActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_places);
+		myContext = PlacesActivity.this;
 		//final ListView listView1 = (ListView) findViewById(R.id.listView1);
 		view1 =  (ListView) findViewById(R.id.pListView1);
 		arrangePlaces();
@@ -68,7 +69,7 @@ public class PlacesActivity extends Activity {
 				
 				for (int i=0; i<cast.length(); i++) {
 				    JSONObject pla = cast.getJSONObject(i);
-				    PlacesListObject h = new PlacesListObject(pla.getString("Id"), pla.getString("Name"), pla.getString("Category"), R.drawable.ic_launcher);
+				    PlacesListObject h = new PlacesListObject(pla.getString("Id"), pla.getString("Name"), pla.getString("Address"), R.drawable.ic_launcher);
 				    placesList.add(h);
 				    //hotelArray[i] =h;
 				    

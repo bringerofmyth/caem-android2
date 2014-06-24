@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="time" />
+                android:inputType="date" />
 
         </LinearLayout>
 
@@ -82,13 +82,14 @@
                 android:id="@+id/ceFinishDateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                
+                android:inputType="date"
                 android:text="Finish Date: " />
 
             <EditText
                 android:id="@+id/ceFinishDateEdit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="date" />
 
         </LinearLayout>
 
@@ -100,13 +101,14 @@
                 android:id="@+id/ceFinishTimeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                
+                android:inputType="time"
                 android:text="Finish Time: " />
 
             <EditText
                 android:id="@+id/ceFinishTimeEdit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="date" />
 
         </LinearLayout>
      

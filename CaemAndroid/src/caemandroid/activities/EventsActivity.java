@@ -37,6 +37,7 @@ public class EventsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events);
+		myContext = EventsActivity.this;
 		view1 = (ListView) findViewById(R.id.eListView1);
 		arrangeEvents();
 		
@@ -63,7 +64,7 @@ public class EventsActivity extends Activity {
 			
 			for (int i=0; i<cast.length(); i++) {
 			    JSONObject pla = cast.getJSONObject(i);
-			    EventsListObject h = new EventsListObject(pla.getString("Id"), pla.getString("Name"), pla.getString("Category"), R.drawable.ic_launcher);
+			    EventsListObject h = new EventsListObject(pla.getString("Id"), pla.getString("Title"), pla.getString("EventType"), R.drawable.ic_launcher);
 			    eventsList.add(h);
 			    //hotelArray[i] =h;
 			    
@@ -107,7 +108,7 @@ public class EventsActivity extends Activity {
 	        if (convertView == null) {
 	 
 	            // satýr görseli oluþturma
-	            convertView = myContext.getLayoutInflater().inflate(
+	            convertView = (EventsActivity.this).getLayoutInflater().inflate(
 	                    R.layout.list_event_layout, parent, false);
 	 
 	            // view holderý sýfýrdan oluþturma

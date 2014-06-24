@@ -1,7 +1,9 @@
 package caemandroid.activities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -112,26 +114,33 @@ public class UserInterestsActivity extends Activity {
 		}
 		else
 		{
-
+			//boolean isExist =false;
+			JSONObject pla1 = null;
+		
 			interestList = new ArrayList<InterestsListObject>();
 			try {
 				if(userCast != null && userCast.length()>0){
 					for(int j = 0; j < cast.length(); j ++){
 						JSONObject obj;
 						obj = cast.getJSONObject(j);
-						//InterestsListObject h = new InterestsListObject(obj.getString("Id"), obj.getString("Title"));
+						InterestsListObject h = new InterestsListObject(obj.getString("Id"), obj.getString("Title"));
+						interestList.add(h);
 						String oId = obj.getString("Id");
 						for (int i=0; i<userCast.length(); i++) {
-							JSONObject pla;
-							pla = userCast.getJSONObject(i);
-							String uId = pla.getString("Id");
+							
+							pla1 = userCast.getJSONObject(i);
+							String uId = pla1.getString("Id");
 							if(uId.equals(oId)){
 								modifyListObject(uId);
+								break;
 							}
+							
 
 						}
+						
 
 					}
+					
 
 				}
 				else{
@@ -178,54 +187,7 @@ public class UserInterestsActivity extends Activity {
 	  });*/
 	 
 	 }
-	private void arrangeInterests(){
-		JSONArray cast = HttpUtility.passedTags;
-		JSONArray userCast = HttpUtility.passedUserTags;
-		if(cast ==null || cast.length()<1 ){
-			HttpUtility.toastMessage(UserInterestsActivity.this, "No interests found.");
-		}
-		else{
-			interestList = new ArrayList<InterestsListObject>();
-			userInterestList = new ArrayList<InterestsListObject>();
-			
-			try {
-				
-				
-				for (int i=0; i<cast.length(); i++) {
-				    JSONObject pla = cast.getJSONObject(i);
-				    InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Title"));
-				    interestList.add(h);
-
-				    //hotelArray[i] =h;
-				}
-				if(userCast != null && userCast.length()>0){
-					for (int i=0; i<userCast.length(); i++) {
-					    JSONObject pla = userCast.getJSONObject(i);
-					    InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Title"));
-					    userInterestList.add(h);				    
-					}
-					for (InterestsListObject inl : userInterestList) {
-						for (InterestsListObject all : interestList) {
-							if(all.getId().equals(inl)){
-								all.setSelected(true);
-								break;
-							}
-						}
-					}
-				}
-				
-
-				
-			}catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		
-		
-	}
-	private void modifyListObject(String idd){
+		private void modifyListObject(String idd){
 		for (InterestsListObject o  : interestList) {
 			if(o.getId().equals(idd))
 			{

@@ -23,6 +23,11 @@ public class InterestsListObject implements Serializable {
 		isSelected = false;
 	}
 
+	public InterestsListObject(String id, String name,boolean isSelected) {
+		this.id = id;
+		this.name = name;
+		this.isSelected = isSelected;
+	}
 
 
 	public InterestsListObject() {

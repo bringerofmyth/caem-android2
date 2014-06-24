@@ -20,22 +20,22 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.view.Menu;
-import android.widget.EditText;
+import android.widget.TextView;
 
 public class PlaceDetailActivity extends Activity {
 
 	private JSONObject jsonObject;
 	private String placeId = "";
-	private EditText name, address, desc, openHours, phone;
+	private TextView name, address, desc, openHours, phone;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_place_detail);
-		name = (EditText) findViewById(R.id.pdNameText);
-		address = (EditText) findViewById(R.id.pdAddressText);
-		desc = (EditText) findViewById(R.id.pdDescriptionText);
-		openHours = (EditText) findViewById(R.id.pdOpenHoursText);
-		phone = (EditText) findViewById(R.id.pdPhoneText);
+		name = (TextView) findViewById(R.id.pdNameText);
+		address =(TextView) findViewById(R.id.pdAddressText);
+		desc = (TextView) findViewById(R.id.pdDescriptionText);
+		openHours = (TextView) findViewById(R.id.pdOpenHoursText);
+		phone = (TextView) findViewById(R.id.pdPhoneText);
 
 		
 		placeId = getIntent().getStringExtra("Id");
@@ -54,22 +54,11 @@ public class PlaceDetailActivity extends Activity {
 		if (placeId.equals(""))
 		{
 			HttpUtility.toastMessage(this, "No place retrieved");
-			finish();
+			//finish();
 		}
 		else{
 			new placeAsyncTask(HttpUtility.WaitMessage).execute();
-			Place p = HttpUtility.parsePlace(jsonObject);
-			if(p !=null) {
-				name.setText(p.getName());
-				address.setText(p.getAddress());
-				desc.setText(p.getDescription());
-				phone.setText(p.getPhone());
-				openHours.setText(p.getOpenHours());
-				
-			}else{
-				HttpUtility.toastMessage(this, "No place retrieved in parsing");
-				finish();
-			}
+			
 
 		}
 	}
@@ -77,7 +66,7 @@ public class PlaceDetailActivity extends Activity {
 	private class placeAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList <NameValuePair>(1);
+		//List<NameValuePair> pairs = new ArrayList <NameValuePair>(1);
 
         public placeAsyncTask(String mMesaj) {
             this.modalMesaj = mMesaj;
@@ -88,7 +77,7 @@ public class PlaceDetailActivity extends Activity {
         @Override
         protected void onPreExecute() {
         	
-        	pairs.add(new BasicNameValuePair("Id", placeId));
+        	//pairs.add(new BasicNameValuePair("Id", placeId));
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
@@ -99,7 +88,7 @@ public class PlaceDetailActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createGetRequest(HttpUtility.GET_PLACE_URL, pairs);
+			jsonObject = HttpUtility.createGetRequestSingle(HttpUtility.GET_PLACE_URL, placeId);
 			return null;
 		}
 		 @Override
@@ -111,11 +100,23 @@ public class PlaceDetailActivity extends Activity {
 		           	 
 	            	if(jsonObject !=null && !HttpUtility.isNullOrEmpty(jsonObject.getString("Name"))){
 	            		HttpUtility.passedJson = jsonObject;
+	            		Place p = HttpUtility.parsePlace(jsonObject);
+	        			if(p !=null) {
+	        				name.setText(p.getName());
+	        				address.setText(p.getAddress());
+	        				desc.setText(p.getDescription());
+	        				phone.setText(p.getPhone());
+	        				openHours.setText(p.getOpenHours());
+	        				
+	        			}else{
+	        				HttpUtility.toastMessage(PlaceDetailActivity.this, "No place retrieved in parsing");
+	        				//finish();
+	        			}
 	            	
 	            	}
 	            	else{
 		            	HttpUtility.toastMessage(PlaceDetailActivity.this, "No place found.");
-		            	finish();
+		            	//finish();
 	            	}
 
 	            	

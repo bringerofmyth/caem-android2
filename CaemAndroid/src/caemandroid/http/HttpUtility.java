@@ -46,7 +46,7 @@ public class HttpUtility {
 	public static final String GET_RECOMM_EVENTS_URL = "http://caemwepapi.azurewebsites.net/api/events/recommend";
 	public static final String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/login";
 	public static final String POST_REGISTER_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/register";
-	public static final String POST_CREATE_EVENT_URL = "";
+	public static final String POST_CREATE_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events/create";
 	public static final String GET_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places";
 	public static final String GET_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events";
 	public static final String GET_RECOMM_PLACES_URL = "http://caemwepapi.azurewebsites.net/api/places/recommend";
@@ -127,6 +127,17 @@ public class HttpUtility {
 			}
 		}
 	}
+	private static String arrangeSingleUrl(String url, String par) {
+
+		if (par == null || par.isEmpty()) {
+			return url;
+		} else {
+				
+				return url + "/" + par;
+		
+		}
+	}
+
 
 	public static JSONObject createGetRequest(String url,
 			List<NameValuePair> pairs) {
@@ -134,6 +145,37 @@ public class HttpUtility {
 		JSONObject json = null;
 		HttpClient httpclient = new DefaultHttpClient();
 		String nUrl = arrangeUrl(url, pairs);
+		HttpGet httpget = new HttpGet(nUrl);
+		HttpResponse response;
+		try {
+			response = httpclient.execute(httpget);
+			
+			HttpEntity entity = response.getEntity();
+
+			if (entity != null) {
+				InputStream instream = entity.getContent();
+				String result = convertStreamToString(instream);
+
+				json = new JSONObject(result);
+
+				instream.close();
+			}
+
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return json;
+	}
+
+	public static JSONObject createGetRequestSingle(String url,String singp) {
+		// Integer productID = Integer.valueOf(2);
+		JSONObject json = null;
+		HttpClient httpclient = new DefaultHttpClient();
+		String nUrl = arrangeSingleUrl(url, singp);
 		HttpGet httpget = new HttpGet(nUrl);
 		HttpResponse response;
 		try {
@@ -167,6 +209,53 @@ public class HttpUtility {
 		StringBuilder builder = new StringBuilder();
 		HttpClient httpclient = new DefaultHttpClient();
 		String nUrl = arrangeUrl(url, pairs);
+		HttpGet httpget = new HttpGet(nUrl);
+		HttpResponse response;
+		try {
+			response = httpclient.execute(httpget);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+			HttpEntity entity = response.getEntity();
+			InputStream content = entity.getContent();
+		
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(content));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				builder.append(line);
+			}
+		} else {
+			Log.e("==>", "Failed to download file");
+			return null;
+		}
+	} catch (ClientProtocolException e) {
+		e.printStackTrace();
+		return null;
+	} catch (IOException e) {
+		e.printStackTrace();
+		return null;
+	}
+
+	// Parse String to JSON object
+	try {
+		
+		jarray = new JSONArray(builder.toString());
+		
+	} catch (JSONException e) {
+		Log.e("JSON Parser", "Error parsing data " + e.toString());
+		return null;
+	}
+
+	// return JSON Object
+	return jarray;
+	}
+	public static JSONArray createGetListSingle(String url,String singleParam) {
+		// Integer productID = Integer.valueOf(2);
+		JSONArray jarray = null;
+		StringBuilder builder = new StringBuilder();
+		HttpClient httpclient = new DefaultHttpClient();
+		String nUrl = arrangeSingleUrl(url, singleParam);
 		HttpGet httpget = new HttpGet(nUrl);
 		HttpResponse response;
 		try {
@@ -246,15 +335,16 @@ public class HttpUtility {
 				event.setIsRecurrent(jEvent.getBoolean("IsRecurrent"));
 				event.setRecurrentUntil(jEvent.getString("RecurrentUntil"));
 				event.setId(jEvent.getInt("Id"));
+				
 				return event;
 
 				
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace();		return null;
 		}
-		return null;
+
 	}
 	private static String convertStreamToString(InputStream is) {
 

@@ -103,6 +103,7 @@ public class CreateEventActivity extends Activity {
 		String modalMesaj;
 		ProgressDialog dialog;
 		List<NameValuePair> pairs = new ArrayList <NameValuePair>(0);
+		
 
         public createEventAsyncTask(String mMesaj) {
             this.modalMesaj = mMesaj;
@@ -114,8 +115,8 @@ public class CreateEventActivity extends Activity {
             
         	pairs.add(new BasicNameValuePair("Title", strTitle));
         	pairs.add(new BasicNameValuePair("StartTime", strStartTime));
-        	pairs.add(new BasicNameValuePair("StartDate", strStartDate));
-        	pairs.add(new BasicNameValuePair("FinishDate", strFinishDate));
+        	//pairs.add(new BasicNameValuePair("StartDate", strStartDate));
+        	//pairs.add(new BasicNameValuePair("FinishDate", strFinishDate));
         	pairs.add(new BasicNameValuePair("FinishTime",strFinishTime));
         	pairs.add(new BasicNameValuePair("Description", strDesc));
         	int ids=-1;

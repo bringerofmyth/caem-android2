@@ -56,14 +56,10 @@ public class WelcomeScreenActivity extends Activity {
 		bInterests.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				//new interestsAsyncTask(HttpUtility.WaitMessage).execute();
-				if(!(HttpUtility.passedTags == null || HttpUtility.passedTags.length()<1))
-				{
+				
 					new userInterestsAsyncTask(HttpUtility.WaitMessage).execute();;
-				}
-				
-				
-				HttpUtility.startIntent(WelcomeScreenActivity.this,
-						UserInterestsActivity.class);
+
+			
 			}
 		});
 		bEvents = (Button) findViewById(R.id.wEventsButton);
@@ -106,7 +102,7 @@ public class WelcomeScreenActivity extends Activity {
 	private class placesAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
+		String paramid = null;
 
 		public placesAsyncTask(String mMesaj) {
 			this.modalMesaj = mMesaj;
@@ -116,8 +112,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 
-			pairs.add(new BasicNameValuePair("Id", String
-					.valueOf(HttpUtility.passedUser)));
+			paramid = String.valueOf(HttpUtility.passedUser);
 			dialog.setMessage(modalMesaj);
 			dialog.setIndeterminate(true);
 			dialog.setCancelable(false);
@@ -128,8 +123,8 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArrayP = HttpUtility.createGetList(
-					HttpUtility.GET_RECOMM_PLACES_URL, pairs);
+			jsonArrayP = HttpUtility.createGetListSingle(
+					HttpUtility.GET_RECOMM_PLACES_URL, paramid);
 			return null;
 		}
 
@@ -167,7 +162,7 @@ public class WelcomeScreenActivity extends Activity {
 	private class userInterestsAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
+		//((List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
 
 		public userInterestsAsyncTask(String mMesaj) {
 			this.modalMesaj = mMesaj;
@@ -177,8 +172,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 
-			pairs.add(new BasicNameValuePair("Id", String
-					.valueOf(HttpUtility.passedUser)));
+			//pairs.add(new BasicNameValuePair("Id", String.valueOf(HttpUtility.passedUser)));
 			dialog.setMessage(modalMesaj);
 			dialog.setIndeterminate(true);
 			dialog.setCancelable(false);
@@ -189,8 +183,10 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArrayU = HttpUtility.createGetList(
-					HttpUtility.GET_USER_TAGS_URL, pairs);
+			jsonArrayU = HttpUtility.createGetListSingle(
+					HttpUtility.GET_USER_TAGS_URL, String
+					.valueOf(HttpUtility.passedUser));
+			
 			return null;
 		}
 
@@ -209,6 +205,8 @@ public class WelcomeScreenActivity extends Activity {
 					HttpUtility.passedUserTags = jsonArrayU;
 				}
 				
+				HttpUtility.startIntent(WelcomeScreenActivity.this,
+						UserInterestsActivity.class);
 				
 
 			} catch (Exception e) {
@@ -280,7 +278,6 @@ public class WelcomeScreenActivity extends Activity {
 	private class eventsAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>(1);
 
 		public eventsAsyncTask(String mMesaj) {
 			this.modalMesaj = mMesaj;
@@ -290,8 +287,7 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 
-			pairs.add(new BasicNameValuePair("Id", String
-					.valueOf(HttpUtility.passedUser)));
+			
 			dialog.setMessage(modalMesaj);
 			dialog.setIndeterminate(true);
 			dialog.setCancelable(false);
@@ -302,8 +298,8 @@ public class WelcomeScreenActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			jsonArrayE = HttpUtility.createGetList(
-					HttpUtility.GET_RECOMM_EVENTS_URL, pairs);
+			jsonArrayE = HttpUtility.createGetListSingle(
+					HttpUtility.GET_RECOMM_EVENTS_URL, String.valueOf(HttpUtility.passedUser));
 			return null;
 		}
 
