@@ -1,0 +1,173 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="248dp"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/cpNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name:" />
+
+            <EditText
+                android:id="@+id/cpNameEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/cpAddressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address: " />
+
+            <EditText
+                android:id="@+id/cpAddressEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/cpPhoneText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone: " />
+
+            <EditText
+                android:id="@+id/cpPhoneEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="phone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/cpDescriptionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description: " />
+
+            <EditText
+                android:id="@+id/cpDescriptionEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="date" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/cpOpenHoursText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:text="Open Hours: " />
+
+            <EditText
+                android:id="@+id/cpOpenHoursEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+
+       
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/cpUploadImageLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image:  " />
+
+            <TextView
+                android:id="@+id/cpUploadImageText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="none " />
+
+            <Button
+                android:id="@+id/cpimagebutton1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="..." />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/cpTagtextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tags: " />
+
+            <TextView
+                android:id="@+id/cpTagtextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="none" />
+
+            <Button
+                android:id="@+id/cpAddTagButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="Add" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+
+            <Button
+                android:id="@+id/cpCreateButton"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Create" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
