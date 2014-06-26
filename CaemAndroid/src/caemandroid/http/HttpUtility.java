@@ -48,6 +48,7 @@ public class HttpUtility {
 	public static final String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/login";
 	public static final String POST_REGISTER_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/register";
 	public static final String POST_CREATE_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events/create";
+	public static final String POST_CREATE_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places/create";
 	public static final String GET_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places";
 	public static final String GET_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events";
 	public static final String GET_RECOMM_PLACES_URL = "http://caemwepapi.azurewebsites.net/api/places/recommend";

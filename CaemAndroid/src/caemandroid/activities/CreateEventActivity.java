@@ -8,34 +8,29 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import caemandroid.entity.InterestsListObject;
-import caemandroid.entity.Tag;
-import caemandroid.http.HttpUtility;
-
-import com.example.caemandroid.R;
-import com.example.caemandroid.R.layout;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
+import caemandroid.entity.InterestsListObject;
+import caemandroid.http.HttpUtility;
+
+import com.example.caemandroid.R;
 
 public class CreateEventActivity extends Activity {
 
 
-	private Button clear, create;
+	private Button clear, create, tagButton;
 	private EditText title, startTime, startDate, finishTime, finishDate, desc;
-	private List<Tag> selectedTags = new ArrayList();
 	private String strTitle, strStartTime, strStartDate, strFinishTime, strFinishDate, strDesc;
 	private JSONObject jsonObject = null;
-	private ArrayList<InterestsListObject> taglist = null;
+	public static ArrayList<InterestsListObject> taglist = new ArrayList<InterestsListObject>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +46,7 @@ public class CreateEventActivity extends Activity {
 		strFinishDate = finishDate.getText().toString();
 		strFinishTime = finishTime.getText().toString();
 		strDesc = desc.getText().toString();
-		if(HttpUtility.isNullOrEmpty(strTitle, strStartDate, strFinishDate, strDesc)){
+		if(HttpUtility.isNullOrEmpty(strTitle, strStartTime, strFinishTime, strDesc)){
 			return false;
 		}
 		else{
@@ -65,7 +60,7 @@ public class CreateEventActivity extends Activity {
 			HttpUtility.toastMessage(CreateEventActivity.this, "Please fill required fields");
 		}
 		else{
-			taglist  = (ArrayList<InterestsListObject>) getIntent().getSerializableExtra("SelectedListTag");
+			//taglist  = (ArrayList<InterestsListObject>) getIntent().getSerializableExtra("SelectedListTag");
 			new createEventAsyncTask(HttpUtility.WaitMessage).execute();
 		}
 	
@@ -89,7 +84,15 @@ public class CreateEventActivity extends Activity {
 				desc.setText("");
 			}
 		});
-		
+		tagButton = (Button) findViewById(R.id.ceAddTagButton);
+		tagButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				HttpUtility.startIntent(CreateEventActivity.this, EventTagsActivity.class);
+				
+			}
+		});
 		create = (Button) findViewById(R.id.ceCreateButton);
 		create.setOnClickListener(new View.OnClickListener() {
 			
@@ -134,6 +137,7 @@ public class CreateEventActivity extends Activity {
             
         }
         
+        
 		@Override
 		protected Void doInBackground(Void... params) {
 			
@@ -151,7 +155,7 @@ public class CreateEventActivity extends Activity {
 	            	if(jsonObject !=null && jsonObject.getString("Id")!=null && !jsonObject.getString("Id").isEmpty() ){
 	            		HttpUtility.passedJson = jsonObject;
 	            		HttpUtility.toastMessage(CreateEventActivity.this, "Event created, notifications sent.");
-
+	            		finish();
 		            	return;
 	            	}
 	            	HttpUtility.toastMessage(CreateEventActivity.this, "Problem occured in creating event");
@@ -169,5 +173,17 @@ public class CreateEventActivity extends Activity {
 	 
 	        }
 	    }
+	@Override
+	public void onResume(){
+		TextView txt = (TextView) findViewById(R.id.cetagtextView2);
+		if(taglist != null && !taglist.isEmpty()){
+			txt.setText("Added");
+		}
+		else{
+			txt.setText("none");
+		}
+		super.onResume();
+	}
+	
 	
 }

@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="date" />
+                android:inputType="date|text" />
 
         </LinearLayout>
 
@@ -108,7 +108,7 @@
                 android:id="@+id/ceFinishTimeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date" />
+                android:inputType="date|text" />
 
         </LinearLayout>
      
@@ -149,11 +149,36 @@
                  android:text="none " />
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/ceimagebutton1"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:text="..." />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/cetagtextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tags: " />
+
+            <TextView
+                android:id="@+id/cetagtextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="none" />
+
+            <Button
+                android:id="@+id/ceAddTagButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text="Add" />
 
         </LinearLayout>
 

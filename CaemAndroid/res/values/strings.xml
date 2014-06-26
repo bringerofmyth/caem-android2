@@ -20,5 +20,7 @@
     <string name="title_activity_create_interest">CreateInterestActivity</string>
     <string name="title_activity_user_interests">UserInterestsActivity</string>
     <string name="title_activity_event_tags">EventTagsActivity</string>
+    <string name="title_activity_create_place">CreatePlaceActivity</string>
+    <string name="title_activity_place_tags">PlaceTagsActivity</string>
 
 </resources>
