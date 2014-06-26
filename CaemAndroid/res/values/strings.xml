@@ -22,5 +22,6 @@
     <string name="title_activity_event_tags">EventTagsActivity</string>
     <string name="title_activity_create_place">CreatePlaceActivity</string>
     <string name="title_activity_place_tags">PlaceTagsActivity</string>
+    <string name="title_activity_interests">InterestsActivity</string>
 
 </resources>

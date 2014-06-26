@@ -1,102 +1,71 @@
 package caemandroid.activities;
 
-import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
-
-
-
-
-
-
-
-
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import caemandroid.entity.InterestsListObject;
+import caemandroid.entity.Tag;
+import caemandroid.http.HttpUtility;
 
 import com.example.caemandroid.R;
-import com.example.caemandroid.R.id;
 import com.example.caemandroid.R.layout;
 
-
-import caemandroid.entity.InterestsListObject;
-import caemandroid.http.HttpUtility;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class EventTagsActivity extends Activity {
-	InterestCustomAdapter dataAdapter = null;
-	private Button saveButton, createButton;
-    private JSONArray jsonArray ;
-    private ArrayList<InterestsListObject> selectedList = null;
-    private ArrayList<InterestsListObject> interestList;
+public class InterestsActivity extends Activity {
+	Activity myContext;
+	MyCustomAdapter dataAdapter = null;
+
+	private ArrayList<InterestsListObject> interestList;
+	private Button  createButton;
+    ArrayList<InterestsListObject> selectedList = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_event_tags);
-		displayListView();
-    saveButton = (Button) findViewById(R.id.eTagsSaveButton);
-    saveButton.setOnClickListener(new View.OnClickListener() {
-    	
-		@Override
-		public void onClick(View v) {
-			/*StringBuffer responseText = new StringBuffer();
-		    responseText.append("The following were selected...\n");*/
+		setContentView(R.layout.activity_interests);
+		 displayListView();
+		
+			     
+	     createButton = (Button) findViewById(R.id.ginintCreateButton);
+	     createButton.setOnClickListener(new View.OnClickListener() {
 			
-			selectedList =null;
-			selectedList = new ArrayList<InterestsListObject>();
-		    selectedList.addAll(dataAdapter.intList);
-		    for (InterestsListObject  elm : dataAdapter.intList) {
-		    	
-		     if(!(elm.isSelected())){
-		    	 selectedList.remove(elm);
-		     }
-		    }
-		    if(CreateEventActivity.taglist == null){
-		    	CreateEventActivity.taglist = new ArrayList<InterestsListObject>();
-		    }
-		    CreateEventActivity.taglist.clear();
-		    	CreateEventActivity.taglist.addAll( selectedList);
-	    
-		    
-		    //HttpUtility.startIntent(getApplicationContext(), CreateEventActivity.class);
-		 
-		finish();
-			
-			
-		}
-	});
-    
+			@Override
+			public void onClick(View v) {
+				HttpUtility.startIntent(InterestsActivity.this, CreateInterestActivity.class);
+				
+			}
+	     });
+
 	}
+
 	private void displayListView() {
 
 		//Array list of countries
 		JSONArray cast = HttpUtility.passedTags;
-		//JSONArray userCast = HttpUtility.passedUserTags;
 		if(cast ==null || cast.length()<1 ){
-			HttpUtility.toastMessage(EventTagsActivity.this, "No interests found.");
+			HttpUtility.toastMessage(InterestsActivity.this, "No interests found.");
 		}
 		else
 		{
-			//boolean isExist =false;
-			JSONObject pla1 = null;
-		
+
 			interestList = new ArrayList<InterestsListObject>();
 			try {
-				
 					for (int i=0; i<cast.length(); i++) {
 						JSONObject pla;
 
@@ -104,31 +73,33 @@ public class EventTagsActivity extends Activity {
 						InterestsListObject h = new InterestsListObject(pla.getString("Id"), pla.getString("Title"));
 						interestList.add(h);
 						}
-
-
 				
 			}catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				HttpUtility.toastMessage(EventTagsActivity.this, e.getStackTrace().toString());
+				HttpUtility.toastMessage(InterestsActivity.this, e.getStackTrace().toString());
 			}
 			//hotelArray[i] =h;
 		}
 
-	  dataAdapter = new InterestCustomAdapter(this,
+
+
+
+
+	  //create an ArrayAdaptar from the String Array
+	  dataAdapter = new MyCustomAdapter(this,
 	    R.layout.checkbox_list_interest, interestList);
-	  ListView listView = (ListView) findViewById(R.id.eTagsListView1);
+	  ListView listView = (ListView) findViewById(R.id.ginListView1);
 	  // Assign adapter to ListView
 	  listView.setAdapter(dataAdapter);
 	 
- 
 	 }
-	
-	 private class InterestCustomAdapter extends ArrayAdapter<InterestsListObject> {
+
+	 private class MyCustomAdapter extends ArrayAdapter<InterestsListObject> {
 		 
 		  private ArrayList<InterestsListObject> intList;
 		 
-		  public InterestCustomAdapter(Context context, int textViewResourceId,    ArrayList<InterestsListObject> interestList) {
+		  public MyCustomAdapter(Context context, int textViewResourceId,    ArrayList<InterestsListObject> interestList) {
 		   super(context, textViewResourceId, interestList);
 		   this.intList = new ArrayList<InterestsListObject>();
 		   this.intList.addAll(interestList);
@@ -159,7 +130,6 @@ public class EventTagsActivity extends Activity {
 		     public void onClick(View v) {  
 		      CheckBox cb = (CheckBox) v ;  
 		      InterestsListObject country = (InterestsListObject) cb.getTag();  
-
 		      country.setSelected(cb.isChecked());
 		     }  
 		    });  
@@ -179,4 +149,17 @@ public class EventTagsActivity extends Activity {
 		  }
 		 
 		 }
+	 /*public void updateResults(ArrayList<Contact> results) {
+	        searchArrayList = results;
+	        //Triggers the list update
+	        notifyDataSetChanged();
+	    }
+	 @Override
+	 public void onResume(){
+		 
+		 super.onResume();
+	 }*/
+		 
 }
+	
+

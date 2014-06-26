@@ -96,7 +96,7 @@ public class CreatePlaceActivity extends Activity {
 	private class createPlaceAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
-		List<NameValuePair> pairs = new ArrayList <NameValuePair>(0);
+		JSONObject j = new JSONObject();
 		String tags=null;
 
         public createPlaceAsyncTask(String mMesaj) {
@@ -108,13 +108,29 @@ public class CreatePlaceActivity extends Activity {
         protected void onPreExecute() {
             if(taglist !=null && !taglist.isEmpty()){
             	tags = HttpUtility.composeTagDTO(taglist);
-            	pairs.add(new BasicNameValuePair("Tags", tags));
+            	try {
+					j.put("Tags", tags);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	//pairs.add(new BasicNameValuePair("Tags", tags));
             }
-        	pairs.add(new BasicNameValuePair("Name", strName));
+			try {
+				j.put("Name", strName);
+				j.put("Phone", strPhone);
+				j.put("Address", strAddress);
+				j.put("Description", strDescription);
+				j.put("OpenHours", strOpenHours);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	/*pairs.add(new BasicNameValuePair("Name", strName));
         	pairs.add(new BasicNameValuePair("Phone", strPhone));
         	pairs.add(new BasicNameValuePair("Description", strDescription));
         	pairs.add(new BasicNameValuePair("Address", strAddress));
-        	pairs.add(new BasicNameValuePair("OpenHours",strOpenHours));
+        	pairs.add(new BasicNameValuePair("OpenHours",strOpenHours));*/
         	
 
         	dialog.setMessage(modalMesaj);
@@ -128,7 +144,7 @@ public class CreatePlaceActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_CREATE_PLACE_URL, pairs);
+			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_CREATE_PLACE_URL, j);
 			return null;
 		}
 		 @SuppressLint("NewApi")
@@ -162,7 +178,7 @@ public class CreatePlaceActivity extends Activity {
 	    }
 	@Override
 	public void onResume(){
-		TextView txt = (TextView) findViewById(R.id.cetagtextView2);
+		TextView txt = (TextView) findViewById(R.id.cpTagtextView2);
 		if(taglist != null && !taglist.isEmpty()){
 			txt.setText("Added");
 		}

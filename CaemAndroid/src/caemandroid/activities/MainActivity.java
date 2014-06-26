@@ -32,14 +32,13 @@ import com.example.caemandroid.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.microsoft.windowsazure.messaging.NotificationHub;
+
 
 @SuppressLint({ "ShowToast", "NewApi" })
 public class MainActivity extends Activity {
 
 	private String SENDER_ID = "142649902484";
 	private GoogleCloudMessaging gcm;
-	private NotificationHub hub;
 	private String array_spinner[];
 	private Button login, register;
 	private EditText userName , pass;
@@ -114,6 +113,11 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                toRegisterActivity();
             }
+
+			private void toRegisterActivity() {
+				// TODO Auto-generated method stub
+				
+			}
         });
     }
 
@@ -180,26 +184,7 @@ private boolean checkPlayServices() {
 	    }.execute(null, null, null);
 	    
 	}
-    @SuppressWarnings("unchecked")
-    private void registerWithNotificationHubs() {
-       new AsyncTask() {
-          @Override
-          protected Object doInBackground(Object... params) {
-             try {
-                String regid = gcm.register(SENDER_ID);
-                hub.register(regid);
-             } catch (Exception e) {
-                return e;
-             }
-             return null;
-         }
-       }.execute(null, null, null);
-    }
-    protected void toRegisterActivity() {
-    	HttpUtility.startIntent(MainActivity.this, RegisterActivity.class);
-
-		
-	}
+ 
 
 
     private boolean validationCheck (){

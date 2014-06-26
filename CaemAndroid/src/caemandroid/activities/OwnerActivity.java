@@ -27,7 +27,12 @@ public class OwnerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_owner);
 		new interestsAsyncTask(HttpUtility.WaitMessage).execute();
-		
+		cPlace = (Button) findViewById(R.id.oCreatePlaceButton);
+		cPlace.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	            	HttpUtility.startIntent(OwnerActivity.this, CreatePlaceActivity.class);
+	            }
+	        });
 		cEvent = (Button) findViewById(R.id.oCreateEventButton);
 		cEvent.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
@@ -37,7 +42,7 @@ public class OwnerActivity extends Activity {
 		cTag = (Button) findViewById(R.id.oCreateCategoryButton);
 		cTag.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
-	            	HttpUtility.startIntent(OwnerActivity.this, CreateInterestActivity.class);
+	            	HttpUtility.startIntent(OwnerActivity.this, InterestsActivity.class);
 	            }
 	        });
 	}
