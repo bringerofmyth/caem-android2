@@ -236,7 +236,7 @@ private boolean checkPlayServices() {
 				if(posit==0){
 					jsonObject.put("Username", "user1");
 					jsonObject.put("Password", "q");
-					jsonObject.put("Role", (2));
+					jsonObject.put("Role", (0));
 				}
 				else{
 					jsonObject.put("Username", "owner");
@@ -292,7 +292,7 @@ private boolean checkPlayServices() {
 	            		}*/
 	            		int role = Integer.parseInt(jsonObjectU.getString("Role"));
 	            		HttpUtility.toastMessage(MainActivity.this, "Found with id: "+jsonObjectU.getString("Id")+" and name: "+ jsonObjectU.getString("Username") );
-	            		if(role ==2 )
+	            		if(role ==0 )
 	            		{
 	            			//HttpUtility.startIntent(MainActivity.this, OwnerActivity.class );
 	            			HttpUtility.startIntent(MainActivity.this, WelcomeScreenActivity.class );

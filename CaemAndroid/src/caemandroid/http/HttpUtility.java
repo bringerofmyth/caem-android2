@@ -365,7 +365,7 @@ public class HttpUtility {
 				event.setMessage(jEvent.getString("Message"));
 				event.setApproval(jEvent.getString("Approval"));
 				event.setId(jEvent.getInt("Id"));
-				
+				event.setWeatherStatus(jEvent.getString("WeatherStatus"));
 				return event;
 
 				
@@ -687,9 +687,9 @@ public static String toProperDate(String date){
 	}
 	else{
 		try {
-			String day = date.substring(8, 10);
-			String month = date.substring(5, 7);
-			String year = date.substring(0,4);
+			String day = date.substring(0, 2);
+			String month = date.substring(3, 5);
+			String year = date.substring(6,10);
 			String hour = date.substring(11,13);
 			String minute = date.substring(14,16);
 			return day+"/"+month+"/"+year+" "+hour+":"+minute;

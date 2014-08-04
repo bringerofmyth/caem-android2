@@ -169,12 +169,12 @@ public class EventDetailActivity extends Activity {
 	        				title.setText(p.getTitle());
 	        				startTime.setText(HttpUtility.toProperDate(p.getStartTime()));
 	        				if(HttpUtility.isNullOrEmpty(p.getMessage())){
-	        					description.setText("No weather infor available for this event");
+	        					description.setText("No weather info available for this event");
 	        				}
 	        				else{
-	        					description.setText(p.getMessage());
+	        					description.setText(p.getMessage()+" Weather info: "+p.getWeatherStatus());
 	        				}
-	        				
+	        				eventType.setText(p.getEventType());
 	        				finishTime.setText(HttpUtility.toProperDate(p.getFinishTime()));
 	        				
 	        			}
