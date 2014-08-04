@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import caemandroid.entity.Event;
+import caemandroid.entity.EventDTO;
 import caemandroid.http.HttpUtility;
 
 import com.example.caemandroid.R;
@@ -146,7 +147,7 @@ public class EventDetailActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject2 = HttpUtility.createGetRequestSingle(HttpUtility.GET_EVENT_URL, String.valueOf(eventId));
+			jsonObject2 = HttpUtility.createGetRequestSingle(HttpUtility.GET_EVENT_INFO_URL, String.valueOf(eventId));
 			return null;
 		}
 		 @Override
@@ -163,13 +164,18 @@ public class EventDetailActivity extends Activity {
 		           	 
 	            	if(jsonObject2 !=null && !HttpUtility.isNullOrEmpty(jsonObject2.getString("Title"))){
 	            		HttpUtility.passedJson = jsonObject2;
-	            		Event p = HttpUtility.parseEvent(jsonObject2);
+	            		EventDTO p = HttpUtility.parseEventDTO(jsonObject2);
 	        			if(p !=null) {
 	        				title.setText(p.getTitle());
-	        				startTime.setText(p.getStartTime());
-	        				description.setText(p.getDescription());
-	        				finishTime.setText(p.getFinishTime());
-	        				//eventType.setText(p.getEventType());
+	        				startTime.setText(HttpUtility.toProperDate(p.getStartTime()));
+	        				if(HttpUtility.isNullOrEmpty(p.getMessage())){
+	        					description.setText("No weather infor available for this event");
+	        				}
+	        				else{
+	        					description.setText(p.getMessage());
+	        				}
+	        				
+	        				finishTime.setText(HttpUtility.toProperDate(p.getFinishTime()));
 	        				
 	        			}
 	        			else{

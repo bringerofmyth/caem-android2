@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import caemandroid.entity.Event;
+import caemandroid.entity.EventDTO;
 import caemandroid.entity.InterestsListObject;
 import caemandroid.entity.Place;
 import android.annotation.SuppressLint;
@@ -51,6 +52,7 @@ public class HttpUtility {
 	public static final String POST_CREATE_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places/create";
 	public static final String GET_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places";
 	public static final String GET_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events";
+	public static final String GET_EVENT_INFO_URL = "http://caemwepapi.azurewebsites.net/api/events/info";
 	public static final String GET_RECOMM_PLACES_URL = "http://caemwepapi.azurewebsites.net/api/places/recommend";
 	public static final String POST_UPDATE_USER_TAGS_URL = "http://caemwepapi.azurewebsites.net/api/tags/updateuser";
 	public static final String POST_CREATE_USER_TAG_URL = "http://caemwepapi.azurewebsites.net/api/tags/create";
@@ -336,6 +338,32 @@ public class HttpUtility {
 				event.setEventType(jEvent.getInt("EventType"));
 				event.setIsRecurrent(jEvent.getBoolean("IsRecurrent"));
 				event.setRecurrentUntil(jEvent.getString("RecurrentUntil"));
+				event.setId(jEvent.getInt("Id"));
+				
+				return event;
+
+				
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();		return null;
+		}
+
+	}
+	public static EventDTO parseEventDTO (JSONObject jEvent){
+		try {
+			if(jEvent == null || isNullOrEmpty(jEvent.getString("Id"))){
+				return null;
+			}
+			else{
+				EventDTO event = new EventDTO();
+				event.setTitle(jEvent.getString("Title"));
+				event.setStartTime(jEvent.getString("StartTime"));
+				event.setFinishTime(jEvent.getString("FinishTime"));
+				event.setEventType(jEvent.getString("EventType"));
+				event.setRuleFireStatus(jEvent.getString("RuleFireStatus"));
+				event.setMessage(jEvent.getString("Message"));
+				event.setApproval(jEvent.getString("Approval"));
 				event.setId(jEvent.getInt("Id"));
 				
 				return event;
@@ -639,6 +667,37 @@ public static String composeTagDTO(ArrayList<InterestsListObject> selectedList){
 		return null;
 	}
 	
+}
+public static String dotNetSubString(int index, int length, String str){
+	if(isNullOrEmpty(str)){
+		return str;
+	}
+	else{
+		try {
+			return str.substring(index, index+length);
+		} catch (Exception e) {
+			return null;
+		}
+	
+	}
+}
+public static String toProperDate(String date){
+	if(isNullOrEmpty(date)){
+		return null;
+	}
+	else{
+		try {
+			String day = date.substring(8, 10);
+			String month = date.substring(5, 7);
+			String year = date.substring(0,4);
+			String hour = date.substring(11,13);
+			String minute = date.substring(14,16);
+			return day+"/"+month+"/"+year+" "+hour+":"+minute;
+		} catch (Exception e) {
+			return null;
+		}
+	
+	}
 }
 
 }
