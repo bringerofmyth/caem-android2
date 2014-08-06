@@ -67,9 +67,9 @@ public class CreateEventActivity extends Activity {
 	}
 	private void findComponents(){
 		title = (EditText) findViewById(R.id.ceTitleEdit);
-		startTime = (EditText) findViewById(R.id.ceStartTimeDateEdit);
+		//startTime = (EditText) findViewById(R.id.ceStartTimeDateEdit);
 		startDate = (EditText) findViewById(R.id.ceStartDateEdit);
-		finishTime = (EditText) findViewById(R.id.ceFinishTimeEdit);
+		//finishTime = (EditText) findViewById(R.id.ceFinishTimeEdit);
 		finishDate = (EditText) findViewById(R.id.ceFinishDateEdit);
 		desc = (EditText) findViewById(R.id.ceDescriptionEdit);
 		clear = (Button) findViewById(R.id.ceClearButton);
@@ -77,9 +77,9 @@ public class CreateEventActivity extends Activity {
 			
 			public void onClick(View v) {
 				title.setText("");
-				startTime.setText("");
+				//startTime.setText("");
 				startDate.setText("");
-				finishTime.setText("");
+				//finishTime.setText("");
 				finishDate.setText("");
 				desc.setText("");
 			}
