@@ -26,8 +26,8 @@ public class CreateEventActivity extends Activity {
 
 
 	private Button clear, create, tagButton;
-	private EditText title, startTime, startDate, finishTime, finishDate, desc;
-	private String strTitle, strStartTime, strStartDate, strFinishTime, strFinishDate, strDesc;
+	private EditText title, startDate, finishDate, desc;
+	private String strTitle, strStartDate, strFinishDate, strDesc;
 	private JSONObject jsonObject = null;
 	public static ArrayList<InterestsListObject> taglist = new ArrayList<InterestsListObject>();
 	
@@ -42,11 +42,11 @@ public class CreateEventActivity extends Activity {
 	private boolean validateAndCheck (){
 		strTitle = title.getText().toString();
 		strStartDate = startDate.getText().toString();
-		strStartTime = startTime.getText().toString();
+		//strStartTime = startTime.getText().toString();
 		strFinishDate = finishDate.getText().toString();
-		strFinishTime = finishTime.getText().toString();
+		//strFinishTime = finishTime.getText().toString();
 		strDesc = desc.getText().toString();
-		if(HttpUtility.isNullOrEmpty(strTitle, strStartTime, strFinishTime, strDesc)){
+		if(HttpUtility.isNullOrEmpty(strTitle, strDesc)){
 			return false;
 		}
 		else{
@@ -123,10 +123,11 @@ public class CreateEventActivity extends Activity {
             	pairs.add(new BasicNameValuePair("Tags", tags));
             }
         	pairs.add(new BasicNameValuePair("Title", strTitle));
-        	pairs.add(new BasicNameValuePair("StartTime", strStartTime));
+        	pairs.add(new BasicNameValuePair("StartTime", strStartDate));
+        	pairs.add(new BasicNameValuePair("EventType", String.valueOf(0)));
         	//pairs.add(new BasicNameValuePair("StartDate", strStartDate));
         	//pairs.add(new BasicNameValuePair("FinishDate", strFinishDate));
-        	pairs.add(new BasicNameValuePair("FinishTime",strFinishTime));
+        	pairs.add(new BasicNameValuePair("FinishTime",strFinishDate));
         	//pairs.add(new BasicNameValuePair("Description", strDesc));
         	
 

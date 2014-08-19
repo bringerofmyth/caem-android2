@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
 	
         array_spinner=new String[2];
         array_spinner[0]="Standard User";
-        array_spinner[1]="Place/Event Owner";
+        array_spinner[1]="Event Notifier";
 
          s = (Spinner) findViewById(R.id.mUsertypeSpinner);
         ArrayAdapter adapter = new ArrayAdapter(this,

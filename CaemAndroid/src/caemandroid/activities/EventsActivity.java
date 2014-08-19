@@ -59,12 +59,15 @@ public class EventsActivity extends Activity {
 		}
 		eventsList = new ArrayList<EventsListObject>();
 
-		
 		try {
 			
 			for (int i=0; i<cast.length(); i++) {
 			    JSONObject pla = cast.getJSONObject(i);
-			    EventsListObject h = new EventsListObject(pla.getString("Id"), pla.getString("Title"), pla.getString("EventType"), R.drawable.ic_launcher);
+			    String eventType= "Outdoor";
+			    if(pla.getInt("EventType")==0){
+			    	eventType = "Indoor";
+			    }
+			    EventsListObject h = new EventsListObject(pla.getString("Id"), pla.getString("Title"), eventType, R.drawable.ic_launcher);
 			    eventsList.add(h);
 			    //hotelArray[i] =h;
 			    

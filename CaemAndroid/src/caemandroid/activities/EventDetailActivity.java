@@ -251,9 +251,10 @@ public class EventDetailActivity extends Activity {
 	            	if(jsonObjectO !=null && !HttpUtility.isNullOrEmpty(jsonObjectO.getString("Id"))){
 	            		HttpUtility.passedRegisterInfoJson = jsonObjectO;
 	            		String message= "";
-	            		String profile = jsonObjectO.getString("UserProfile");
-	            		if(!HttpUtility.isNullOrEmpty(profile ) && !profile.equals("standard") )
-	            			message = "Time profile set to "+ profile;
+	            		JSONObject profilej = jsonObjectO.getJSONObject("User");
+	            		String prof = profilej.getString("Profile");
+	            		if(!HttpUtility.isNullOrEmpty(prof ) && !prof.equals("standard") )
+	            			message = "Time profile set to "+ prof;
 	            		HttpUtility.toastMessage(EventDetailActivity.this, "You are registered! "+message);
 	            		modifyRegisterButtonView(true);
 	            	
