@@ -45,10 +45,10 @@
             android:text="Your interests" />
 
         <Button
-            android:id="@+id/wHistoryLocation"
+            android:id="@+id/wPreferencesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your History Locations"
+            android:text="Your preferences"
             android:width="300dp" />
 
         <Button

@@ -124,7 +124,7 @@ public class CreateEventActivity extends Activity {
             }
         	pairs.add(new BasicNameValuePair("Title", strTitle));
         	pairs.add(new BasicNameValuePair("StartTime", strStartDate));
-        	pairs.add(new BasicNameValuePair("EventType", String.valueOf(0)));
+        	pairs.add(new BasicNameValuePair("EventType", String.valueOf(1)));
         	//pairs.add(new BasicNameValuePair("StartDate", strStartDate));
         	//pairs.add(new BasicNameValuePair("FinishDate", strFinishDate));
         	pairs.add(new BasicNameValuePair("FinishTime",strFinishDate));

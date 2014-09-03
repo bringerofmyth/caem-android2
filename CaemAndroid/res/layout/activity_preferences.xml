@@ -1,0 +1,149 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/preftttextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time Profile:" />
+
+            <RadioGroup
+                android:id="@+id/prefRadioGroupTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                  <RadioButton
+                    android:id="@+id/preftRadio4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                 
+                    android:text="none" />
+                <RadioButton
+                    android:id="@+id/preftRadio0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="business-hours" />
+
+                <RadioButton
+                    android:id="@+id/preftRadio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                            android:checked="true"
+                    android:text="non-business-hours" />
+                  <RadioButton
+                    android:id="@+id/reradio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="night-hours" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp" >
+
+            <TextView
+                android:id="@+id/prefttTextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weather Profile" />
+
+            <RadioGroup
+                android:id="@+id/prefRadioGroupWeather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/prefwRadioButton02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="On" />
+
+                <RadioButton
+                    android:id="@+id/prefwRadioButton01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Off" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="74dp" >
+
+            <TextView
+                android:id="@+id/preflTextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location Profile:" />
+
+            <RadioGroup
+                android:id="@+id/prefRadioGroupLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/preflRadioButton04"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                        android:checked="true"
+                    android:text="On" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                
+                    android:text="Off" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/preflLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location:" />
+
+            <Spinner
+                android:id="@+id/prefSpinner1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/prefbutton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:text="Save" />
+
+</RelativeLayout>

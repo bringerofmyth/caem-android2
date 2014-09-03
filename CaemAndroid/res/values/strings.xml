@@ -23,5 +23,6 @@
     <string name="title_activity_create_place">CreatePlaceActivity</string>
     <string name="title_activity_place_tags">PlaceTagsActivity</string>
     <string name="title_activity_interests">InterestsActivity</string>
+    <string name="title_activity_preferences">PreferencesActivity</string>
 
 </resources>

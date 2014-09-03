@@ -20,11 +20,40 @@ public class User implements Serializable {
 	private String password;
 	private String email;
 	private String phone;
+	private String weatherProfile;
+	private String timeProfile;
+	private String locationProfile;
+	private String location;
+	
 	
 	private Role role;
 
 
 
+	public String getWeatherProfile() {
+		return weatherProfile;
+	}
+	public void setWeatherProfile(String weatherProfile) {
+		this.weatherProfile = weatherProfile;
+	}
+	public String getTimeProfile() {
+		return timeProfile;
+	}
+	public void setTimeProfile(String timeProfile) {
+		this.timeProfile = timeProfile;
+	}
+	public String getLocationProfile() {
+		return locationProfile;
+	}
+	public void setLocationProfile(String locationProfile) {
+		this.locationProfile = locationProfile;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
 	public Integer getId() {
 		return this.id;
 	}
