@@ -248,11 +248,6 @@ private boolean checkPlayServices() {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	
-        
-        	
-        	
-        	
         	//pairs.add(new BasicNameValuePair("Id", String.valueOf(2)));
         	//pairs.add(new BasicNameValuePair("UserType", String.valueOf(posit)));
         	if(posit == -1){
@@ -280,7 +275,10 @@ private boolean checkPlayServices() {
 	            try {
 		           	 
 	            	if(jsonObjectU !=null && jsonObjectU.getString("Id")!=null && !jsonObjectU.getString("Id").isEmpty() ){
-	            		HttpUtility.passedUser = jsonObjectU.getInt("Id");/*
+	            		HttpUtility.passedUser = jsonObjectU.getInt("Id");
+	            		HttpUtility.passedUserObject = jsonObjectU;
+	            		/*
+	            		
 	            		if(posit==0){
 	            			HttpUtility.createIntent(MainActivity.this, WelcomeScreenActivity.class );
 	            		}
@@ -291,7 +289,7 @@ private boolean checkPlayServices() {
 	            			HttpUtility.toastMessage(MainActivity.this, "Response: User Type not applicable");
 	            		}*/
 	            		int role = Integer.parseInt(jsonObjectU.getString("Role"));
-	            		HttpUtility.toastMessage(MainActivity.this, "Found with id: "+jsonObjectU.getString("Id")+" and name: "+ jsonObjectU.getString("Username") );
+	            		HttpUtility.toastMessage(MainActivity.this, "Hi "+ jsonObjectU.getString("Username") );
 	            		if(role ==0 )
 	            		{
 	            			//HttpUtility.startIntent(MainActivity.this, OwnerActivity.class );
@@ -325,9 +323,6 @@ private boolean checkPlayServices() {
 	            	//HttpUtility.toastMessage(MainActivity.this, "Username/password combination is not matched.");
 	            	
 	               // String id = jsonObject.getString("Telefon").toString();
-	              
-	                	                
-	 
 	            } catch (Exception e) {
 	            	HttpUtility.toastMessage(MainActivity.this, e.toString());
 	            	//HttpUtility.toastMessage(MainActivity.this, "Exception:Username/password combination is not matched.");

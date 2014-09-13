@@ -14,8 +14,11 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import caemandroid.entity.InterestsListObject;
 import caemandroid.http.HttpUtility;
@@ -24,7 +27,12 @@ import com.example.caemandroid.R;
 
 public class CreateEventActivity extends Activity {
 
-
+	private String array_spinner[];
+	private Spinner s;
+	private int locationIndex;
+	private int eventIndex;
+	private RadioGroup radioButtonGroupLocation;
+	private String locat="";
 	private Button clear, create, tagButton;
 	private EditText title, startDate, finishDate, desc;
 	private String strTitle, strStartDate, strFinishDate, strDesc;
@@ -73,6 +81,7 @@ public class CreateEventActivity extends Activity {
 		finishDate = (EditText) findViewById(R.id.ceFinishDateEdit);
 		desc = (EditText) findViewById(R.id.ceDescriptionEdit);
 		clear = (Button) findViewById(R.id.ceClearButton);
+		radioButtonGroupLocation = (RadioGroup) findViewById(R.id.ce_radioGroup1);
 		clear.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
@@ -102,15 +111,41 @@ public class CreateEventActivity extends Activity {
 			}
 		});
 
-		
+		 array_spinner=new String[3];
+	     array_spinner[0]="Ankara";
+	     array_spinner[1]="Istanbul";
+	     array_spinner[2]="Izmir";
+	     
+	    
+	     s = (Spinner) findViewById(R.id.ce_spinner1);
+	        ArrayAdapter adapter = new ArrayAdapter(this,
+	        android.R.layout.simple_spinner_item, array_spinner);
+	        s.setAdapter(adapter);
+	     
 	
 	}
+	private void setSelections(){
+		locationIndex = s.getSelectedItemPosition();
+		 	int radioButtonLocationID = radioButtonGroupLocation.getCheckedRadioButtonId();
+			View radioButtonLocationIndex = radioButtonGroupLocation.findViewById(radioButtonLocationID);
+			eventIndex = radioButtonGroupLocation.indexOfChild(radioButtonLocationIndex);
+			
+			 if(locationIndex==1)
+				 locat="istanbul";
+			 else {
+				 if(locationIndex==2)
+				 locat ="izmir";
+				 else
+				locat = "ankara";
+			 }
+			 }
+	
 	private class createEventAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
 		ProgressDialog dialog;
 		List<NameValuePair> pairs = new ArrayList <NameValuePair>(0);
 		String tags=null;
-
+		JSONObject jsonObjectInner = new JSONObject();
         public createEventAsyncTask(String mMesaj) {
             this.modalMesaj = mMesaj;
             this.dialog = new ProgressDialog(CreateEventActivity.this);
@@ -118,19 +153,35 @@ public class CreateEventActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            if(taglist !=null && !taglist.isEmpty()){
-            	tags = HttpUtility.composeTagDTO(taglist);
-            	pairs.add(new BasicNameValuePair("Tags", tags));
-            }
-        	pairs.add(new BasicNameValuePair("Title", strTitle));
+        	
+        	try{
+        		setSelections();
+        		 if(taglist !=null && !taglist.isEmpty()){
+                 	tags = HttpUtility.composeTagDTO(taglist);
+                 	pairs.add(new BasicNameValuePair("Tags", tags));
+                 	jsonObjectInner.put("Tags",tags);
+                 }
+        		 jsonObjectInner.put("Title",strTitle);
+        		 jsonObjectInner.put("StartTime",strStartDate);
+        		 jsonObjectInner.put("EventType",String.valueOf(eventIndex));
+        		 jsonObjectInner.put("Place",locat);
+        		 jsonObjectInner.put("FinishTime",strFinishDate);
+        	}catch (JSONException e){
+        		
+        	}
+           
+         
+           
+        /*	pairs.add(new BasicNameValuePair("Title", strTitle));
         	pairs.add(new BasicNameValuePair("StartTime", strStartDate));
-        	pairs.add(new BasicNameValuePair("EventType", String.valueOf(1)));
+        	pairs.add(new BasicNameValuePair("EventType", String.valueOf(eventIndex)));
+        	pairs.add(new BasicNameValuePair("Place", locat));
         	//pairs.add(new BasicNameValuePair("StartDate", strStartDate));
         	//pairs.add(new BasicNameValuePair("FinishDate", strFinishDate));
         	pairs.add(new BasicNameValuePair("FinishTime",strFinishDate));
         	//pairs.add(new BasicNameValuePair("Description", strDesc));
         	
-
+*/
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
@@ -142,7 +193,7 @@ public class CreateEventActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_CREATE_EVENT_URL, pairs);
+			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_CREATE_EVENT_URL, jsonObjectInner);
 			return null;
 		}
 		 @SuppressLint("NewApi")
@@ -174,7 +225,7 @@ public class CreateEventActivity extends Activity {
 	 
 	        }
 	    }
-	@Override
+/*	@Override
 	public void onResume(){
 		TextView txt = (TextView) findViewById(R.id.cetagtextView2);
 		if(taglist != null && !taglist.isEmpty()){
@@ -185,6 +236,6 @@ public class CreateEventActivity extends Activity {
 		}
 		super.onResume();
 	}
-	
+	*/
 	
 }

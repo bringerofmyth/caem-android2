@@ -18,6 +18,8 @@ public class EventDTO implements Serializable {
 	private String ruleFireStatus;
 	private String 	Message;
 	private String Approval;
+	private String location;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -71,6 +73,12 @@ public class EventDTO implements Serializable {
 	}
 	public void setWeatherStatus(String weatherStatus) {
 		this.weatherStatus = weatherStatus;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 

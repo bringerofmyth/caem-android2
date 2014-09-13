@@ -32,7 +32,7 @@ public class EventDetailActivity extends Activity {
 	private String eventId = "";
 	private boolean isUserRegistered = false;
 	private Button register, back;
-	private TextView title, startTime, finishTime, eventType, description;
+	private TextView title, startTime, finishTime, eventType, description,loc;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +42,7 @@ public class EventDetailActivity extends Activity {
 		finishTime = (TextView) findViewById(R.id.edFinishTimeText);
 		eventType = (TextView) findViewById(R.id.edEventTypeText);
 		description = (TextView) findViewById(R.id.edDescriptionText);
+		loc = (TextView) findViewById(R.id.edloctextView2);
 		register = (Button) findViewById(R.id.edRegisterButton);
 		
 		 
@@ -168,14 +169,16 @@ public class EventDetailActivity extends Activity {
 	        			if(p !=null) {
 	        				title.setText(p.getTitle());
 	        				startTime.setText(HttpUtility.toProperDate(p.getStartTime()));
+	        				
 	        				if(HttpUtility.isNullOrEmpty(p.getMessage())){
 	        					description.setText("No weather info available for this event");
 	        				}
 	        				else{
-	        					description.setText(p.getMessage()+" Weather info: "+p.getWeatherStatus());
+	        					description.setText(p.getMessage()+"Weather info: "+p.getWeatherStatus()+".");
 	        				}
 	        				eventType.setText(p.getEventType());
 	        				finishTime.setText(HttpUtility.toProperDate(p.getFinishTime()));
+	        				loc.setText(capitalize(p.getLocation()));
 	        				
 	        			}
 	        			else{
@@ -203,6 +206,13 @@ public class EventDetailActivity extends Activity {
 	 
 	        }
 	    }
+	private String capitalize (String w){
+		if(HttpUtility.isNullOrEmpty(w))
+			return w;
+		else{
+			return Character.toUpperCase(w.charAt(0)) + w.substring(1);
+		}
+	}
 
 	private class registerUserAsyncTask extends AsyncTask<Void, Void, Void> {
 		String modalMesaj;
@@ -218,8 +228,9 @@ public class EventDetailActivity extends Activity {
         @Override
         protected void onPreExecute() {
         	try {
-				jO.put("UserId", String.valueOf(HttpUtility.passedUser) );
-				jO.put("EventId", eventId);
+        		int eventIdInt =Integer.parseInt(eventId);
+				jO.put("UserId", (HttpUtility.passedUser) );
+				jO.put("EventId", eventIdInt);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

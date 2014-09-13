@@ -26,26 +26,26 @@
                 android:orientation="vertical" >
 
                   <RadioButton
-                    android:id="@+id/preftRadio4"
+                    android:id="@+id/preftradiotimenone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                  
                     android:text="none" />
                 <RadioButton
-                    android:id="@+id/preftRadio0"
+                    android:id="@+id/preftRadiobusiness"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="false"
                     android:text="business-hours" />
 
                 <RadioButton
-                    android:id="@+id/preftRadio1"
+                    android:id="@+id/preftradiononbuss"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                             android:checked="true"
                     android:text="non-business-hours" />
                   <RadioButton
-                    android:id="@+id/reradio2"
+                    android:id="@+id/preftradionight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="night-hours" />
@@ -71,14 +71,14 @@
                 android:orientation="horizontal" >
 
                 <RadioButton
-                    android:id="@+id/prefwRadioButton02"
+                    android:id="@+id/prefwradioon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="On" />
 
                 <RadioButton
-                    android:id="@+id/prefwRadioButton01"
+                    android:id="@+id/prefwradiooff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Off" />
@@ -102,14 +102,14 @@
                 android:orientation="horizontal" >
 
                 <RadioButton
-                    android:id="@+id/preflRadioButton04"
+                    android:id="@+id/preflradioon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                         android:checked="true"
                     android:text="On" />
 
                 <RadioButton
-                    android:id="@+id/RadioButton03"
+                    android:id="@+id/preflradiooff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                 

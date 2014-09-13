@@ -75,6 +75,7 @@ public class HttpUtility {
 	public static JSONArray passedUserRegistrations = null;
 	public static String ReservationUrl = "";
 	public static JSONArray passedTags  = null;
+	public static JSONObject passedUserObject = null;
 
 
 	public static JSONObject createPostRequest(String url,
@@ -367,6 +368,7 @@ public class HttpUtility {
 				event.setMessage(jEvent.getString("Message"));
 				event.setApproval(jEvent.getString("Approval"));
 				event.setId(jEvent.getInt("Id"));
+				event.setLocation(jEvent.getString("Location"));
 				event.setWeatherStatus(jEvent.getString("WeatherStatus"));
 				return event;
 

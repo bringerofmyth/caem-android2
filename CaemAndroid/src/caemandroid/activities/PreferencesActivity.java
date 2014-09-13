@@ -57,7 +57,8 @@ public class PreferencesActivity extends Activity {
 	        android.R.layout.simple_spinner_item, array_spinner);
 	        s.setAdapter(adapter);
 	        
-	     userLocIndex = s.getSelectedItemPosition();
+	    // userLocIndex = s.getSelectedItemPosition();
+	     setViews();
 	     saveButton = (Button) findViewById(R.id.prefbutton1);
 	     saveButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -67,6 +68,52 @@ public class PreferencesActivity extends Activity {
 			}
 		});
 	 
+	}
+	private void setViews()  {
+		String usloc = "";
+		String weather="";
+		String loc="";
+		String time="";
+		try {
+			usloc = HttpUtility.passedUserObject.getString("LastLocation");
+			weather = HttpUtility.passedUserObject.getString("WeatherProfile");
+			loc = HttpUtility.passedUserObject.getString("LocationProfile");
+			time = HttpUtility.passedUserObject.getString("TimeProfile");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(usloc.equals("istanbul"))
+			 s.setSelection(1);
+		else{
+			if (usloc.equals("izmir"))
+				s.setSelection(2);
+			else 
+				s.setSelection(0);
+		}
+		if(time.equals("business-hours"))
+			radioButtonGroupTime.check(R.id.preftRadiobusiness);
+		else  {
+			if(time.equals("non-business-hours"))
+				radioButtonGroupTime.check(R.id.preftradiononbuss);
+			else{
+				if(time.equals("night-hours"))
+					radioButtonGroupTime.check(R.id.preftradionight);
+				else
+					radioButtonGroupTime.check(R.id.preftradiotimenone);
+			}
+		}
+		if(loc.equals("on"))
+			radioButtonGroupLocation.check(R.id.preflradioon);
+		else 
+			radioButtonGroupLocation.check(R.id.preflradiooff);
+		
+		if(weather.equals("on"))
+			radioButtonGroupWeather.check(R.id.prefwradioon);
+		else 
+			radioButtonGroupWeather.check(R.id.prefwradiooff);
+		
 	}
 	private void setProfiles(){
 		int radioButtonTimeID = radioButtonGroupTime.getCheckedRadioButtonId();
