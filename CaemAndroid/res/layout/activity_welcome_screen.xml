@@ -26,29 +26,29 @@
         <Button
             android:id="@+id/wPlacesButton"
             android:layout_width="wrap_content"
-            android:width= "300dp"
             android:layout_height="wrap_content"
-            android:text="Places you might interest" />
+            android:text="Interesting Places"
+            android:width="300dp" />
 
         <Button
             android:id="@+id/wEventsButton"
-            android:width= "300dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Events you might interest" />
+            android:text="Interesting Events"
+            android:width="300dp" />
 
         <Button
             android:id="@+id/wInterestsButton"
             android:layout_width="wrap_content"
-            android:width= "300dp"
             android:layout_height="wrap_content"
-            android:text="Your interests" />
+            android:text="Your Interests"
+            android:width="300dp" />
 
         <Button
             android:id="@+id/wPreferencesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your preferences"
+            android:text="Your Preferences"
             android:width="300dp" />
 
         <Button

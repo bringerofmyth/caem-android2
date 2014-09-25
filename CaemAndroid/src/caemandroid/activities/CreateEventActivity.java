@@ -169,19 +169,6 @@ public class CreateEventActivity extends Activity {
         	}catch (JSONException e){
         		
         	}
-           
-         
-           
-        /*	pairs.add(new BasicNameValuePair("Title", strTitle));
-        	pairs.add(new BasicNameValuePair("StartTime", strStartDate));
-        	pairs.add(new BasicNameValuePair("EventType", String.valueOf(eventIndex)));
-        	pairs.add(new BasicNameValuePair("Place", locat));
-        	//pairs.add(new BasicNameValuePair("StartDate", strStartDate));
-        	//pairs.add(new BasicNameValuePair("FinishDate", strFinishDate));
-        	pairs.add(new BasicNameValuePair("FinishTime",strFinishDate));
-        	//pairs.add(new BasicNameValuePair("Description", strDesc));
-        	
-*/
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
             dialog.setCancelable(false);
@@ -211,31 +198,12 @@ public class CreateEventActivity extends Activity {
 		            	return;
 	            	}
 	            	HttpUtility.toastMessage(CreateEventActivity.this, "Problem occured in creating event");
-	            	
-	               // String id = jsonObject.getString("Telefon").toString();
-	              
-	                	                
-	 
 	            } catch (JSONException e) {
 	            	HttpUtility.toastMessage(CreateEventActivity.this, "Exception:Problem occured in creating event");
 	                e.printStackTrace();
 	            }
-	 
-	           // text.setText(responseBody);
-	 
+
 	        }
 	    }
-/*	@Override
-	public void onResume(){
-		TextView txt = (TextView) findViewById(R.id.cetagtextView2);
-		if(taglist != null && !taglist.isEmpty()){
-			txt.setText("Added");
-		}
-		else{
-			txt.setText("none");
-		}
-		super.onResume();
-	}
-	*/
-	
+
 }

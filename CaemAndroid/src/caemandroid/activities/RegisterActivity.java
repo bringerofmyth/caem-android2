@@ -99,7 +99,7 @@ public class RegisterActivity extends Activity {
 		ProgressDialog dialog;
 		String productName = "";
 		List<NameValuePair> pairs = new ArrayList <NameValuePair>(5);
-
+		JSONObject j = new JSONObject();
         public registerAsyncTask(String mMesaj) {
             this.modalMesaj = mMesaj;
             this.dialog = new ProgressDialog(RegisterActivity.this);
@@ -107,13 +107,25 @@ public class RegisterActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
+            try {
+				j.put("Username", strUsernam);
+				j.put("Password", strPass);
+				j.put("Email", strEmail);
+				j.put("Name", strName);
+				j.put("Phone", strPhone);
+				j.put("Surname", strSurname);
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             
-        	pairs.add(new BasicNameValuePair("Username", strUsernam));
+        /*	pairs.add(new BasicNameValuePair("Username", strUsernam));
         	pairs.add(new BasicNameValuePair("Password", strPass));
         	pairs.add(new BasicNameValuePair("Email", strEmail));
         	pairs.add(new BasicNameValuePair("Name", strName));
         	pairs.add(new BasicNameValuePair("Phone", strPhone));
-        	pairs.add(new BasicNameValuePair("Surname", strSurname));
+        	pairs.add(new BasicNameValuePair("Surname", strSurname));*/
         	//pairs.add(new BasicNameValuePair("UserType", strUserType));
         	dialog.setMessage(modalMesaj);
             dialog.setIndeterminate(true);
@@ -125,7 +137,7 @@ public class RegisterActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			
-			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_REGISTER_USER_URL, pairs);
+			jsonObject = HttpUtility.createPostRequest(HttpUtility.POST_REGISTER_USER_URL, j);
 			return null;
 		}
 		 @SuppressLint("NewApi")
@@ -138,12 +150,16 @@ public class RegisterActivity extends Activity {
 		           	 
 	            	if(jsonObject !=null && jsonObject.getString("Id")!=null && !jsonObject.getString("Id").isEmpty() ){
 	            		HttpUtility.passedJson = jsonObject;
-	            		HttpUtility.startIntent(RegisterActivity.this, WelcomeScreenActivity.class );
+	            		HttpUtility.toastMessage(RegisterActivity.this, "You are registered.");
+	            		HttpUtility.startIntent(RegisterActivity.this, MainActivity.class );
 
 		            	return;
 	            	}
-	            	HttpUtility.toastMessage(RegisterActivity.this, "Problem occured in registering user.");
-	            	
+	            	else{
+	            		HttpUtility.toastMessage(RegisterActivity.this, "Problem occured in registering user.");
+
+	            	}
+	            		            	
 	               // String id = jsonObject.getString("Telefon").toString();
 	              
 	                	                

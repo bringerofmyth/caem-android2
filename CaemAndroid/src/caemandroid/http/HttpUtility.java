@@ -44,13 +44,16 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class HttpUtility {
+	
+	public static final String POST_SEND_PUSH_URL = "http://caemwepapi.azurewebsites.net/api/send";
 
 	public static final String GET_RECOMM_EVENTS_URL = "http://caemwepapi.azurewebsites.net/api/events/recommend";
 	public static final String POST_LOGIN_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/login";
 	public static final String POST_REGISTER_USER_URL = "http://caemwepapi.azurewebsites.net/api/users/register";
 	public static final String POST_CREATE_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events/create";
 	public static final String POST_SET_PREFERENCES_URL = "http://caemwepapi.azurewebsites.net/api/users/setpreferences";
-	
+	public static final String POST_USER_DEVICE_CHECK_URL = "http://caemwepapi.azurewebsites.net/api/users/devicecheck";
+	public static final String POST_REGISTER_DEVICE_URL = "http://caemwepapi.azurewebsites.net/api/users/registerdevice";
 	public static final String POST_CREATE_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places/create";
 	public static final String GET_PLACE_URL = "http://caemwepapi.azurewebsites.net/api/places";
 	public static final String GET_EVENT_URL = "http://caemwepapi.azurewebsites.net/api/events";
@@ -134,6 +137,7 @@ public class HttpUtility {
 			}
 		}
 	}
+	
 	private static String arrangeSingleUrl(String url, String par) {
 
 		if (par == null || par.isEmpty()) {
